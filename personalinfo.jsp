@@ -1,4 +1,4 @@
- <!--  HEADER INFO
+  <!--  HEADER INFO
 +  File NAME 	: views/los/personalinfo.jsp
 +  PURPOSE		: 
 +  CREATED BY	: 
@@ -53,6 +53,7 @@
 +  1.0.0.35      Tanisha Agarwal       08-JUL-2024          CR-Udyam Registrationvarification For invidual customer
 +  1.0.0.36      Narottam Biswal       27-Nov-2025            PAN  verification geen/red tick
 +  1.0.0.37      Ravi Shankar          09-Apr-2026            GST Registration Status
++  1.0.0.38      Sanchi Agarwal        26-Aug-2026            Added DOB, Gender and Pincode fields under Authorised Signatory in Personal Info
 +  **********************************************************************************************************************************
  --> 
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
@@ -1259,28 +1260,28 @@ function closeWindow()
 											
 									<tr valign="top" class="list_header" >
 									<logic:notEqual name="activityInfo" property="activityType" value="PDE">	
-											<td width="36px"><input type="checkbox" onclick="selectAllAuthSignRow(this)"></td><!-- <td width="4%">Select</td> -->
+											<td width="2%"><input type="checkbox" onclick="selectAllAuthSignRow(this)"></td><!-- <td width="4%">Select</td> -->
 									</logic:notEqual>	
-										<td width="90px" id="authSignViewDedupTH" style="display:none;white-space:pre;" align="left">Dedupe Initiated</td>		<!-- //1.0.0.27 -->
-										<td width="110px" align="left">First Name</td>
-										<td width="110px" align="left">Middle Name</td>
-										<td width="110px" align="left">Last Name</td>
+										<td width="5%" id="authSignViewDedupTH" style="display:none;white-space:pre;" align="left">Dedupe Initiated</td>		<!-- //1.0.0.27 -->
+										<td width="6%" align="left">First Name</td>
+										<td width="6%" align="left">Middle Name</td>
+										<td width="6%" align="left">Last Name</td>
 										
-										<td width="100px" align="left">Gender</td>
-										<td width="120px" align="left">DOB</td>
+										<td width="5%" align="left">Gender</td>
+										<td width="6%" align="left">DOB</td>
 										
-										<td width="110px" align="left">Designation</td>
-										<td width="100px" align="left">DIN No</td>
-										<td width="120px" align="left">Email</td>
-										<td width="100px" align="left">Pan</td><!-- 1.0.0.25 -->
-										<td width="110px" align="left">Contact No</td>
+										<td width="6%" align="left">Designation</td>
+										<td width="5%" align="left">DIN No</td>
+										<td width="6%" align="left">Email</td>
+										<td width="5%" align="left">Pan</td><!-- 1.0.0.25 -->
+										<td width="6%" align="left">Contact No</td>
 										<!-- start <!-- 1.0.0.25 -->
-										<td width="120px" align="left">Address</td>
-										<td width="110px" align="left">State</td>
-										<td width="110px" align="left">City</td>
-										<td width="110px" align="left">Pincode</td>
+										<td width="6%" align="left">Address</td>
+										<td width="6%" align="left">State</td>
+										<td width="6%" align="left">City</td>
+										<td width="6%" align="left">Pincode</td>
 										<!-- End 1.0.0.25 -->
-										<td width="110px" align="left">Delegation</td>
+										<td width="6%" align="left">Delegation</td>
 								 </tr>
 								 </table>
 					
@@ -2052,20 +2053,6 @@ function closeWindow()
 	</div>
 
 	<!-- Passport modal popup 1.0.0.30 end-->
-	
-	
-	<%@include file="../common/footer.jsp"%><!--Navneet Yadav :: Added common footer instead of hardcoded footer -->
-	<%@include file="../common/screenFieldsXRules.jsp" %>
-	<%@include file="../common/screenFieldsXValidation.jsp" %>
-	
-<script src="vmenu/js/toggleMenu.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/slimscroll.js"></script>	
-
-
-</body>
-</html:html>
-
 	
 	
 	<%@include file="../common/footer.jsp"%><!--Navneet Yadav :: Added common footer instead of hardcoded footer -->
