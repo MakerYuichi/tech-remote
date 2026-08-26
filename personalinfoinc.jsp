@@ -415,7 +415,7 @@ function addAuthorisedSignatoryRow(objId,objfName,objmName,objlName,objDesignati
 		authorisedRowRowHtml = authorisedRowRowHtml + "<tr id='authorisedSignrowtable"+authSignRowIndex+"' >"; //1.0.0.11
 		
 	<logic:notEqual name="activityInfo" property="activityType" value="PDE">	
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td  width='2%' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td  width='36px' align='left'>";
 			authorisedRowRowHtml = authorisedRowRowHtml + "<input type='checkbox' id='AuthSignCheckbox"+authSignRowIndex+"' value='"+authSignRowIndex+"' onclick='toggleAuthSignRow(this);'/>";
 			
 			authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
@@ -424,7 +424,7 @@ function addAuthorisedSignatoryRow(objId,objfName,objmName,objlName,objDesignati
 		
 
 
-	authorisedRowRowHtml = authorisedRowRowHtml + "<td width='8%' align='left' id='authSignViewDedupTd"+authSignRowIndex+"'><span id='authSignViewDedupTdSpanId"+authSignRowIndex+"'></span>";
+	authorisedRowRowHtml = authorisedRowRowHtml + "<td width='90px' align='left' id='authSignViewDedupTd"+authSignRowIndex+"'><span id='authSignViewDedupTdSpanId"+authSignRowIndex+"'></span>";
 	//1.0.0.11
 	authorisedRowRowHtml = authorisedRowRowHtml + "<span align='left' id='authSignDedupInitFlagTd"+authSignRowIndex+"'>";
 	authorisedRowRowHtml = authorisedRowRowHtml + "&nbsp;&nbsp;"+objsignDedInitFlag+"&nbsp;&nbsp;";
@@ -434,76 +434,76 @@ function addAuthorisedSignatoryRow(objId,objfName,objmName,objlName,objDesignati
 	authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 	
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='8%' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
 		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignId"+authSignRowIndex+"' value='"+objId+"' /><input type='hidden' id='authSignDedCustId"+authSignRowIndex+"' value='"+objDedCustId+"' /><input type='hidden' id='authSignDedSearchId"+authSignRowIndex+"' value='"+objDedSearchId+"' />";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignFName"+authSignRowIndex+"' style='width:110 px;' value='"+objfName+"'  />";//1.0.0.12
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignFName"+authSignRowIndex+"' style='width:100px;' value='"+objfName+"'  />";//1.0.0.12
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='8%' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignMName"+authSignRowIndex+"' style='width:110 px;' value='"+objmName+"'  />";//1.0.0.12
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignMName"+authSignRowIndex+"' style='width:100px;' value='"+objmName+"'  />";//1.0.0.12
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='8%' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignLName"+authSignRowIndex+"' style='width:110 px;' value='"+objlName+"'  />";//1.0.0.12
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignLName"+authSignRowIndex+"' style='width:100px;' value='"+objlName+"'  />";//1.0.0.12
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='5%' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<select id='authSignGender"+authSignRowIndex+"' style='width:110 px;' value='"+objGender+"' ><option value='0'>SELECT</option>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='100px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<select id='authSignGender"+authSignRowIndex+"' style='width:95px;' value='"+objGender+"' ><option value='0'>SELECT</option>";
 		for (var i=0; i<genderTypeArr.length; i++) {
 			authorisedRowRowHtml = authorisedRowRowHtml + "<option value='"+genderTypeArr[i][0]+"'>"+genderTypeArr[i][1]+"</option>";
 		}
 		authorisedRowRowHtml = authorisedRowRowHtml + "</select></td>";//1.0.0.21
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='6%' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='120px' align='left'>";
 		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' name='authDate' id='authSignDob"+authSignRowIndex+"' style='width:90px; vertical-align: middle; background: rgb(235, 243, 255);' maxlength='11' onblur='checkDateFormat(this,\"Auth Date\");' /><a href='#' style='text-decoration: none' onClick='cal19.select(document.getElementById(\"authSignDob"+authSignRowIndex+"\"),\"authSignDob_link\",\"dd-NNN-yyyy\"); return false;' NAME='authSignDob_link' ID='authSignDob_link' title='Calendar'> <i class='fa fa-calendar' aria-hidden='true'></i> </a>";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";//1.0.0.21
 		
 		
 		
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='8%' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<select   id='authSignDesignation"+authSignRowIndex+"' style='width:110 px;' onchange=designationChange('"+authSignRowIndex+"') /><option value='0'>SELECT</option>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<select   id='authSignDesignation"+authSignRowIndex+"' style='width:100px;' onchange=designationChange('"+authSignRowIndex+"') /><option value='0'>SELECT</option>";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='8%' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='20' id='authSignDinNo"+authSignRowIndex+"' style='width:110 px;' value='"+objDinNo+"' disabled='true'  />";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='100px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='20' id='authSignDinNo"+authSignRowIndex+"' style='width:90px;' value='"+objDinNo+"' disabled='true'  />";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='8%' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignMailId"+authSignRowIndex+"' style='width:110 px;' value='"+objMAilId+"' />";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='120px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignMailId"+authSignRowIndex+"' style='width:110px;' value='"+objMAilId+"' />";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='8%' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='10' id='authSignPan"+authSignRowIndex+"' style='width:110 px;' value='"+objPan+"' />";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='100px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='10' id='authSignPan"+authSignRowIndex+"' style='width:90px;' value='"+objPan+"' />";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='8%' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='10' id='authSignContactNo"+authSignRowIndex+"' style='width:110 px;' value='"+objContactNo+"'  />";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='10' id='authSignContactNo"+authSignRowIndex+"' style='width:100px;' value='"+objContactNo+"'  />";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
 		//Start 1.0.0.10
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='8%' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' maxlength='50' id='authSignAddress"+authSignRowIndex+"' style='width:110 px;' value='"+objAddress+"'  />"; //1.0.0.13
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='120px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' maxlength='50' id='authSignAddress"+authSignRowIndex+"' style='width:110px;' value='"+objAddress+"'  />"; //1.0.0.13
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='8%' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignState"+authSignRowIndex+"' name='authSignState"+authSignRowIndex+"' value='"+objStateId+"' /><input type='text' size='14' maxlength='50' id='authSignState"+authSignRowIndex+"_temp' name='authSignState"+authSignRowIndex+"_temp' style='width:110 px;' value='"+objStateName+"' disabled='true' /><input type='button' class='blueBotton' name='btnState' value='...' onclick=\"javascript:authSignStateChooser('QM_STATEMASTER','"+authSignRowIndex+"');\">";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignState"+authSignRowIndex+"' name='authSignState"+authSignRowIndex+"' value='"+objStateId+"' /><input type='text' size='14' maxlength='50' id='authSignState"+authSignRowIndex+"_temp' name='authSignState"+authSignRowIndex+"_temp' style='width:70px;' value='"+objStateName+"' disabled='true' /><input type='button' class='blueBotton' name='btnState' value='...' onclick=\"javascript:authSignStateChooser('QM_STATEMASTER','"+authSignRowIndex+"');\">";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='8%' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignCity"+authSignRowIndex+"' name='authSignCity"+authSignRowIndex+"' value='"+objCityId+"' /><input type='text' size='14' maxlength='50' id='authSignCity"+authSignRowIndex+"_temp' name='authSignCity"+authSignRowIndex+"_temp' style='width:110 px;' value='"+objCityName+"' disabled='true' /><input type='button' class='blueBotton' name='btnCity' value='...' onclick=\"javascript:authSignCityChooser('QM_CITYMASTER','"+authSignRowIndex+"');\">";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignCity"+authSignRowIndex+"' name='authSignCity"+authSignRowIndex+"' value='"+objCityId+"' /><input type='text' size='14' maxlength='50' id='authSignCity"+authSignRowIndex+"_temp' name='authSignCity"+authSignRowIndex+"_temp' style='width:70px;' value='"+objCityName+"' disabled='true' /><input type='button' class='blueBotton' name='btnCity' value='...' onclick=\"javascript:authSignCityChooser('QM_CITYMASTER','"+authSignRowIndex+"');\">";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 
 		//End 1.0.0.10
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='5%' align='left'>";//1.0.0.21
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignPinCode"+authSignRowIndex+"' name='authSignPinCode"+authSignRowIndex+"' value='"+objPincodeId+"' /><input type='text' size='14' maxlength='50' id='authSignPinCode"+authSignRowIndex+"_temp' name='authSignPinCode"+authSignRowIndex+"_temp' style='width:110 px;' value='"+objPincodeName+"' disabled='true' /><input type='button' class='blueBotton' name='btnPinCode' value='...' onclick=\"javascript:authSignPincodeChooser('QM_PINCODEMASTER','"+authSignRowIndex+"');\">";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";//1.0.0.21
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignPinCode"+authSignRowIndex+"' name='authSignPinCode"+authSignRowIndex+"' value='"+objPincodeId+"' /><input type='text' size='14' maxlength='50' id='authSignPinCode"+authSignRowIndex+"_temp' name='authSignPinCode"+authSignRowIndex+"_temp' style='width:70px;' value='"+objPincodeName+"' disabled='true' /><input type='button' class='blueBotton' name='btnPinCode' value='...' onclick=\"javascript:authSignPincodeChooser('QM_PINCODEMASTER','"+authSignRowIndex+"');\">";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";//1.0.0.21
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='8%' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignDelegation"+authSignRowIndex+"' style='width:110 px;' value='"+objDelegation+"'  />";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignDelegation"+authSignRowIndex+"' style='width:100px;' value='"+objDelegation+"'  />";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 
 		authorisedRowRowHtml = authorisedRowRowHtml + "</tr>";
