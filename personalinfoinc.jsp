@@ -30,6 +30,7 @@
 +   1.0.0.21	Ravi Shankar          10-Apr-2026            GST Registration Status
 +  1.0.0.22      Nalin Kumar Jena      18-Jun-2026            TDS deduction in Processing Fee paid by customer
 +  1.0.0.23	    Ahtesham Husain       10-Aug-2026	         165920 After hit on Registration Form screen is blank.
++  1.0.0.24      Sanchi Agarwal        26-Aug-2026            Added DOB, Gender and Pincode fields under Authorised Signatory in Personal Info
  -->
  
 
@@ -405,17 +406,17 @@ function addAuthorisedSignatoryRow(objId,objfName,objmName,objlName,objDesignati
 		var cityNameArr = new Array();
 		//End 1.0.0.10
 		var signDedInitFlagArr = new Array(); //1.0.0.11
-		var GenderArr = new Array(); //1.0.0.21
-		var DobArr = new Array(); //1.0.0.21
-		var PincodeArr = new Array(); //1.0.0.21
-		var PincodeIdArr = new Array(); //1.0.0.21
+		var GenderArr = new Array(); //1.0.0.24 
+		var DobArr = new Array(); //1.0.0.24 
+		var PincodeArr = new Array(); //1.0.0.24 
+		var PincodeIdArr = new Array(); //1.0.0.24 
 		var authorisedRowRowHtml = "";
 		//authorisedRowRowHtml = authorisedRowRowHtml + "<div id='authorisedSignrowtable"+authSignRowIndex+"' style='border:none; text-align:left;'>"; //1.0.0.11 commented
 		//authorisedRowRowHtml = authorisedRowRowHtml + "<table  width='100%' class='main_body'>"; //1.0.0.11 commented
 		authorisedRowRowHtml = authorisedRowRowHtml + "<tr id='authorisedSignrowtable"+authSignRowIndex+"' >"; //1.0.0.11
 		
 	<logic:notEqual name="activityInfo" property="activityType" value="PDE">	
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td  width='36px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td  width='2%' align='left'>";
 			authorisedRowRowHtml = authorisedRowRowHtml + "<input type='checkbox' id='AuthSignCheckbox"+authSignRowIndex+"' value='"+authSignRowIndex+"' onclick='toggleAuthSignRow(this);'/>";
 			
 			authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
@@ -424,7 +425,7 @@ function addAuthorisedSignatoryRow(objId,objfName,objmName,objlName,objDesignati
 		
 
 
-	authorisedRowRowHtml = authorisedRowRowHtml + "<td width='90px' align='left' id='authSignViewDedupTd"+authSignRowIndex+"'><span id='authSignViewDedupTdSpanId"+authSignRowIndex+"'></span>";
+	authorisedRowRowHtml = authorisedRowRowHtml + "<td width='5%' align='left' id='authSignViewDedupTd"+authSignRowIndex+"'><span id='authSignViewDedupTdSpanId"+authSignRowIndex+"'></span>";
 	//1.0.0.11
 	authorisedRowRowHtml = authorisedRowRowHtml + "<span align='left' id='authSignDedupInitFlagTd"+authSignRowIndex+"'>";
 	authorisedRowRowHtml = authorisedRowRowHtml + "&nbsp;&nbsp;"+objsignDedInitFlag+"&nbsp;&nbsp;";
@@ -434,75 +435,75 @@ function addAuthorisedSignatoryRow(objId,objfName,objmName,objlName,objDesignati
 	authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 	
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='6%' align='left'>";
 		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignId"+authSignRowIndex+"' value='"+objId+"' /><input type='hidden' id='authSignDedCustId"+authSignRowIndex+"' value='"+objDedCustId+"' /><input type='hidden' id='authSignDedSearchId"+authSignRowIndex+"' value='"+objDedSearchId+"' />";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignFName"+authSignRowIndex+"' style='width:100px;' value='"+objfName+"'  />";//1.0.0.12
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignFName"+authSignRowIndex+"' style='width:110px; background: rgb(235, 243, 255);' value='"+objfName+"'  />";//1.0.0.12
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignMName"+authSignRowIndex+"' style='width:100px;' value='"+objmName+"'  />";//1.0.0.12
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='6%' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignMName"+authSignRowIndex+"' style='width:110px;' value='"+objmName+"'  />";//1.0.0.12
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignLName"+authSignRowIndex+"' style='width:100px;' value='"+objlName+"'  />";//1.0.0.12
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='6%' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignLName"+authSignRowIndex+"' style='width:110px; background: rgb(235, 243, 255);' value='"+objlName+"'  />";//1.0.0.12
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='100px' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<select id='authSignGender"+authSignRowIndex+"' style='width:95px;' value='"+objGender+"' ><option value='0'>SELECT</option>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='5%' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<select id='authSignGender"+authSignRowIndex+"' style='width:95px; background: rgb(235, 243, 255);' value='"+objGender+"' ><option value='0'>SELECT</option>";
 		for (var i=0; i<genderTypeArr.length; i++) {
 			authorisedRowRowHtml = authorisedRowRowHtml + "<option value='"+genderTypeArr[i][0]+"'>"+genderTypeArr[i][1]+"</option>";
 		}
-		authorisedRowRowHtml = authorisedRowRowHtml + "</select></td>";//1.0.0.21
+		authorisedRowRowHtml = authorisedRowRowHtml + "</select></td>";//1.0.0.24 
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='120px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='6%' align='left'>";
 		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' name='authDate' id='authSignDob"+authSignRowIndex+"' style='width:90px; vertical-align: middle; background: rgb(235, 243, 255);' maxlength='11' onblur='checkDateFormat(this,\"Auth Date\");' /><a href='#' style='text-decoration: none' onClick='cal19.select(document.getElementById(\"authSignDob"+authSignRowIndex+"\"),\"authSignDob_link\",\"dd-NNN-yyyy\"); return false;' NAME='authSignDob_link' ID='authSignDob_link' title='Calendar'> <i class='fa fa-calendar' aria-hidden='true'></i> </a>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";//1.0.0.21
+		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";//1.0.0.24 
 		
 		
 		
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<select   id='authSignDesignation"+authSignRowIndex+"' style='width:100px;' onchange=designationChange('"+authSignRowIndex+"') /><option value='0'>SELECT</option>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='6%' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<select id='authSignDesignation"+authSignRowIndex+"' style='width:110px; background: rgb(235, 243, 255);' onchange=designationChange('"+authSignRowIndex+"') /><option value='0'>SELECT</option>";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='100px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='5%' align='left'>";
 		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='20' id='authSignDinNo"+authSignRowIndex+"' style='width:90px;' value='"+objDinNo+"' disabled='true'  />";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='120px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='6%' align='left'>";
 		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignMailId"+authSignRowIndex+"' style='width:110px;' value='"+objMAilId+"' />";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='100px' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='10' id='authSignPan"+authSignRowIndex+"' style='width:90px;' value='"+objPan+"' />";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='5%' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='10' id='authSignPan"+authSignRowIndex+"' style='width:90px; background: rgb(235, 243, 255);' value='"+objPan+"' />";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='6%' align='left'>";
 		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='10' id='authSignContactNo"+authSignRowIndex+"' style='width:100px;' value='"+objContactNo+"'  />";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
 		//Start 1.0.0.10
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='120px' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' maxlength='50' id='authSignAddress"+authSignRowIndex+"' style='width:110px;' value='"+objAddress+"'  />"; //1.0.0.13
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='6%' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' maxlength='50' id='authSignAddress"+authSignRowIndex+"' style='width:110px; background: rgb(235, 243, 255);' value='"+objAddress+"'  />"; //1.0.0.13
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignState"+authSignRowIndex+"' name='authSignState"+authSignRowIndex+"' value='"+objStateId+"' /><input type='text' size='14' maxlength='50' id='authSignState"+authSignRowIndex+"_temp' name='authSignState"+authSignRowIndex+"_temp' style='width:70px;' value='"+objStateName+"' disabled='true' /><input type='button' class='blueBotton' name='btnState' value='...' onclick=\"javascript:authSignStateChooser('QM_STATEMASTER','"+authSignRowIndex+"');\">";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='6%' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignState"+authSignRowIndex+"' name='authSignState"+authSignRowIndex+"' value='"+objStateId+"' /><input type='text' size='14' maxlength='50' id='authSignState"+authSignRowIndex+"_temp' name='authSignState"+authSignRowIndex+"_temp' style='width:70px; background: rgb(235, 243, 255);' value='"+objStateName+"' disabled='true' /><input type='button' class='blueBotton' name='btnState' value='...' onclick=\"javascript:authSignStateChooser('QM_STATEMASTER','"+authSignRowIndex+"');\">";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignCity"+authSignRowIndex+"' name='authSignCity"+authSignRowIndex+"' value='"+objCityId+"' /><input type='text' size='14' maxlength='50' id='authSignCity"+authSignRowIndex+"_temp' name='authSignCity"+authSignRowIndex+"_temp' style='width:70px;' value='"+objCityName+"' disabled='true' /><input type='button' class='blueBotton' name='btnCity' value='...' onclick=\"javascript:authSignCityChooser('QM_CITYMASTER','"+authSignRowIndex+"');\">";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='6%' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignCity"+authSignRowIndex+"' name='authSignCity"+authSignRowIndex+"' value='"+objCityId+"' /><input type='text' size='14' maxlength='50' id='authSignCity"+authSignRowIndex+"_temp' name='authSignCity"+authSignRowIndex+"_temp' style='width:70px; background: rgb(235, 243, 255);' value='"+objCityName+"' disabled='true' /><input type='button' class='blueBotton' name='btnCity' value='...' onclick=\"javascript:authSignCityChooser('QM_CITYMASTER','"+authSignRowIndex+"');\">";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 
 		//End 1.0.0.10
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";//1.0.0.21
-		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignPinCode"+authSignRowIndex+"' name='authSignPinCode"+authSignRowIndex+"' value='"+objPincodeId+"' /><input type='text' size='14' maxlength='50' id='authSignPinCode"+authSignRowIndex+"_temp' name='authSignPinCode"+authSignRowIndex+"_temp' style='width:70px;' value='"+objPincodeName+"' disabled='true' /><input type='button' class='blueBotton' name='btnPinCode' value='...' onclick=\"javascript:authSignPincodeChooser('QM_PINCODEMASTER','"+authSignRowIndex+"');\">";
-		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";//1.0.0.21
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='6%' align='left'>";//1.0.0.24
+		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='hidden' id='authSignPinCode"+authSignRowIndex+"' name='authSignPinCode"+authSignRowIndex+"' value='"+objPincodeId+"' /><input type='text' size='14' maxlength='50' id='authSignPinCode"+authSignRowIndex+"_temp' name='authSignPinCode"+authSignRowIndex+"_temp' style='width:70px; background: rgb(235, 243, 255);' value='"+objPincodeName+"' disabled='true' /><input type='button' class='blueBotton' name='btnPinCode' value='...' onclick=\"javascript:authSignPincodeChooser('QM_PINCODEMASTER','"+authSignRowIndex+"');\">";
+		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";//1.0.0.24 
 		
-		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='110px' align='left'>";
+		authorisedRowRowHtml = authorisedRowRowHtml + "<td width='6%' align='left'>";
 		authorisedRowRowHtml = authorisedRowRowHtml + "<input type='text' size='14' maxlength='50' id='authSignDelegation"+authSignRowIndex+"' style='width:100px;' value='"+objDelegation+"'  />";
 		authorisedRowRowHtml = authorisedRowRowHtml + "</td>";
 
@@ -535,10 +536,10 @@ function addAuthorisedSignatoryRow(objId,objfName,objmName,objlName,objDesignati
 		 	stateNameArr[i] = document.getElementById("authSignState"+i+"_temp").value;
 		 	cityNameArr[i] = document.getElementById("authSignCity"+i+"_temp").value;
 		 	//End 1.0.0.10
-		 	GenderArr[i] = document.getElementById("authSignGender"+i).value; //1.0.0.21
-		 	DobArr[i] = document.getElementById("authSignDob"+i).value; //1.0.0.21
-		 	PincodeIdArr[i] = document.getElementById("authSignPinCode"+i).value; //1.0.0.21
-		 	PincodeArr[i] = document.getElementById("authSignPinCode"+i+"_temp").value; //1.0.0.21
+		 	GenderArr[i] = document.getElementById("authSignGender"+i).value; //1.0.0.24 
+		 	DobArr[i] = document.getElementById("authSignDob"+i).value; //1.0.0.24 
+		 	PincodeIdArr[i] = document.getElementById("authSignPinCode"+i).value; //1.0.0.24 
+		 	PincodeArr[i] = document.getElementById("authSignPinCode"+i+"_temp").value; //1.0.0.24 
 		 	signDedInitFlagArr[i] = document.getElementById("authSignDedupInitFlagTd"+i).value; //1.0.0.11
 		 	}
 		}
@@ -571,17 +572,17 @@ function addAuthorisedSignatoryRow(objId,objfName,objmName,objlName,objDesignati
 		 	document.getElementById("authSignState"+i+"_temp").value = stateNameArr[i];
 		 	document.getElementById("authSignCity"+i+"_temp").value = cityNameArr[i];
 		 	//End 1.0.0.10
-		 	document.getElementById("authSignGender"+i).value = GenderArr[i]; //1.0.0.21
-		 	document.getElementById("authSignDob"+i).value = DobArr[i]; //1.0.0.21
-		 	document.getElementById("authSignPinCode"+i).value = PincodeIdArr[i]; //1.0.0.21
-		 	document.getElementById("authSignPinCode"+i+"_temp").value = PincodeArr[i]; //1.0.0.21
+		 	document.getElementById("authSignGender"+i).value = GenderArr[i]; //1.0.0.24 
+		 	document.getElementById("authSignDob"+i).value = DobArr[i]; //1.0.0.24 
+		 	document.getElementById("authSignPinCode"+i).value = PincodeIdArr[i]; //1.0.0.24 
+		 	document.getElementById("authSignPinCode"+i+"_temp").value = PincodeArr[i]; //1.0.0.24 
 		 	document.getElementById("authSignDedupInitFlagTd"+i).value = signDedInitFlagArr[i]; //1.0.0.11
 		 	}
 		}
 		populateDesignation(document.getElementById("authSignDesignation"+authSignRowIndex));
 		document.getElementById("authSignDesignation"+authSignRowIndex).value=objDesignation;
-		document.getElementById("authSignGender"+authSignRowIndex).value=objGender; //1.0.0.21
-		document.getElementById("authSignDob"+authSignRowIndex).value=objDob; //1.0.0.21
+		document.getElementById("authSignGender"+authSignRowIndex).value=objGender; //1.0.0.24
+		document.getElementById("authSignDob"+authSignRowIndex).value=objDob; //1.0.0.24 
 				
 			
 		if(objId!="null" && objId!="" && objId!=null){
@@ -1527,10 +1528,10 @@ function addKeyContactsRow(objjId,objCaseId,objCaseCode,objlob,objcontactType,ob
    		var signatoryContactNo;
    		var signatoryDelegation;
    		var signatoryDedInitFlag; //1.0.0.11
-   		var signatoryGender; //1.0.0.21
-   		var signatoryDob; //1.0.0.21
-   		var signatoryPincodeId; //1.0.0.21
-   		var signatoryPincodeName; //1.0.0.21
+   		var signatoryGender; //1.0.0.24 
+   		var signatoryDob; //1.0.0.24 
+   		var signatoryPincodeId; //1.0.0.24 
+   		var signatoryPincodeName; //1.0.0.24 
    		var personalInfoXMLDOM=getXMLDOMFromStreamXX(populateXml);
    		//Changed by Ravikant for browser compatibility
    		var browser=(navigator.userAgent).toLowerCase();
@@ -1578,10 +1579,10 @@ function addKeyContactsRow(objjId,objCaseId,objCaseCode,objlob,objcontactType,ob
    		signatoryCityName="";
    		//End 1.0.0.10
    		signatoryDedInitFlag=""; //1.0.0.11
-   		signatoryGender=""; //1.0.0.21
-   		signatoryDob=""; //1.0.0.21
-   		signatoryPincodeId=""; //1.0.0.21
-   		signatoryPincodeName=""; //1.0.0.21
+   		signatoryGender=""; //1.0.0.24 
+   		signatoryDob=""; //1.0.0.24 
+   		signatoryPincodeId=""; //1.0.0.24 
+   		signatoryPincodeName=""; //1.0.0.24 
 			
    			for( var z=0; z<=rowlength[i].childNodes.length; z++)
 			{
@@ -1675,7 +1676,7 @@ function addKeyContactsRow(objjId,objCaseId,objCaseCode,objlob,objcontactType,ob
 						if(rowlength[i].childNodes[z].childNodes[0])
 							signatoryDedInitFlag = rowlength[i].childNodes[z].childNodes[0].nodeValue;
 					}
-					//1.0.0.21 start
+					//1.0.0.24 start
 					else if("GENDER" == nodeName)
 					{
 						if(rowlength[i].childNodes[z].childNodes[0])
@@ -1696,12 +1697,12 @@ function addKeyContactsRow(objjId,objCaseId,objCaseCode,objlob,objcontactType,ob
 						if(rowlength[i].childNodes[z].childNodes[0])
 							signatoryPincodeName = rowlength[i].childNodes[z].childNodes[0].nodeValue;
 					}
-					//1.0.0.21 end
+					//1.0.0.24 end
 					//1.0.0.11
 				}
 			}
 			
-				addAuthorisedSignatoryRow(signatoryId,signatoryFname,signatoryMname,signatoryLname,signatoryDesignation,signatoryDinNO,signatoryMailId,signatoryContactNo,signatoryDelegation,signatoryDedCustId,signatoryDedSearchId,signatoryPan,signatoryAddress,signatoryStateId,signatoryStateName,signatoryCityId,signatoryCityName,signatoryDedInitFlag,signatoryGender,signatoryDob,signatoryPincodeId,signatoryPincodeName); //1.0.0.21
+				addAuthorisedSignatoryRow(signatoryId,signatoryFname,signatoryMname,signatoryLname,signatoryDesignation,signatoryDinNO,signatoryMailId,signatoryContactNo,signatoryDelegation,signatoryDedCustId,signatoryDedSearchId,signatoryPan,signatoryAddress,signatoryStateId,signatoryStateName,signatoryCityId,signatoryCityName,signatoryDedInitFlag,signatoryGender,signatoryDob,signatoryPincodeId,signatoryPincodeName); //1.0.0.24 
 	   	 }
 	  }
 	/*   function load(){
@@ -2773,8 +2774,8 @@ function beneficiaryOwnerRow(objId,objName,objPan,objEmail,objMobile,objAddress,
 				var sessionStatus = checkinterval(sessionTimeout);
 				if(sessionStatus=="Y"){
 					window.open("populateMaster.do?qString="+tName+"&label=State&dependant=authSignState"+rowNo+"&rowNo="+rowNo+"&cleanDependentItems=T~authSignCity"+rowNo+"_temp,T~authSignPinCode"+rowNo+"_temp&rowNum=1","popState","width=500, height=490,top=100,left=100, location=no, maximize=yes, menubar=no, status=no, toolbar=no, scrollbars=no, resizable=no","modal=yes" );
-					clearCityBeforeSubmit(rowNo); //1.0.0.21
-					clearPincodeBeforeSubmit(rowNo); //1.0.0.21
+					clearCityBeforeSubmit(rowNo); //1.0.0.24 
+					clearPincodeBeforeSubmit(rowNo); //1.0.0.24 
 				}else{
 				<%request.setAttribute("sessionExpiry",
 					"Your session has expired!! Please login again.");%>
@@ -2784,11 +2785,11 @@ function beneficiaryOwnerRow(objId,objName,objPan,objEmail,objMobile,objAddress,
 				}
 			}
 			
-		 function clearCityBeforeSubmit(rowNo) { //1.0.0.21
+		 function clearCityBeforeSubmit(rowNo) { //1.0.0.24 
 			    var cityField = document.getElementById("authSignCity" + rowNo);
 			    if (cityField) { cityField.value = ""; }
 			}
-			 function clearPincodeBeforeSubmit(rowNo) { //1.0.0.21
+			 function clearPincodeBeforeSubmit(rowNo) { //1.0.0.24 
 			    var pincodeField = document.getElementById("authSignPinCode" + rowNo);
 			    if (pincodeField) { pincodeField.value = ""; }
 			}
@@ -2797,7 +2798,7 @@ function beneficiaryOwnerRow(objId,objName,objPan,objEmail,objMobile,objAddress,
 			 	      var paramList = tName+"~"+stateId;
 			 	      var sessionStatus = checkinterval(sessionTimeout);
 			 		if(sessionStatus=="Y"){
-			 			window.open("populateMaster.do?qString="+paramList+"&label=City&dependant=authSignCity"+rowNo+"&rowNo="+rowNo+"&cleanDependentItems=T~authSignPinCode"+rowNo+"_temp&rowNum=1","popCity","width=500, height=490,top=100,left=100, location=no, menubar=no, status=no, toolbar=no, scrollbars=no, resizable=no"); //1.0.0.21
+			 			window.open("populateMaster.do?qString="+paramList+"&label=City&dependant=authSignCity"+rowNo+"&rowNo="+rowNo+"&cleanDependentItems=T~authSignPinCode"+rowNo+"_temp&rowNum=1","popCity","width=500, height=490,top=100,left=100, location=no, menubar=no, status=no, toolbar=no, scrollbars=no, resizable=no"); //1.0.0.24 
 			 		}else{
 			 			<%request.setAttribute("sessionExpiry", "Your session has expired!! Please login again.");%>
 			 			document.forms[0].action = "userAuthAction.do?dispatchMethod=logout";
@@ -2806,7 +2807,7 @@ function beneficiaryOwnerRow(objId,objName,objPan,objEmail,objMobile,objAddress,
 			 		}
 			 }
 
-			 function authSignPincodeChooser(tName,rowNo){ //1.0.0.21
+			 function authSignPincodeChooser(tName,rowNo){ //1.0.0.24 
 			 	     var cityId = document.getElementById("authSignCity"+rowNo).value;
 			 	      var paramList = tName+"~"+cityId;
 			 	      var sessionStatus = checkinterval(sessionTimeout);
@@ -2871,3 +2872,4 @@ function beneficiaryOwnerRow(objId,objName,objPan,objEmail,objMobile,objAddress,
 
 </head>
 </html:html>
+
