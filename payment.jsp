@@ -975,15 +975,14 @@ form[name="paymentForm"] #listData input[value="..."].blueBotton, form[name="pay
 				var ab=x.insertCell(25);
 				
 				var q=x.insertCell(26);
-				
-				var c=x.insertCell(27);
-				var cx=x.insertCell(28);//added by 1.0.0.15
-				c.style.display="none";
 				// 1.0.0.31 add start
-				var h2hStatus=x.insertCell(29);
-				var postApprRejSource=x.insertCell(30);
-				var postApprRejUser=x.insertCell(31);
+				var h2hStatus=x.insertCell(27);
+				var postApprRejSource=x.insertCell(28);
+				var postApprRejUser=x.insertCell(29);
 				// 1.0.0.31 add end
+				var c=x.insertCell(30);
+				var cx=x.insertCell(31);//added by 1.0.0.15
+				c.style.display="none";
 				</logic:equal>
 				
 				<logic:notEqual name ="activityInfo" property="activityMode" value="V">
@@ -1018,15 +1017,15 @@ form[name="paymentForm"] #listData input[value="..."].blueBotton, form[name="pay
 				
 				var ab=x.insertCell(24);
 				var q=x.insertCell(25);
-				var c=x.insertCell(26);
+				// 1.0.0.31 add start
+				var h2hStatus=x.insertCell(26);
+				var postApprRejSource=x.insertCell(27);
+				var postApprRejUser=x.insertCell(28);
+				// 1.0.0.31 add end
+				var c=x.insertCell(29);
 				c.style.display="none";
 								
-				var cx=x.insertCell(27);//added by 1.0.0.15
-				// 1.0.0.31 add start
-				var h2hStatus=x.insertCell(28);
-				var postApprRejSource=x.insertCell(29);
-				var postApprRejUser=x.insertCell(30);
-				// 1.0.0.31 add end
+				var cx=x.insertCell(30);//added by 1.0.0.15
 				
 				</logic:notEqual>
 				
