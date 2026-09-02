@@ -974,12 +974,13 @@ form[name="paymentForm"] #listData input[value="..."].blueBotton, form[name="pay
 				
 				var ab=x.insertCell(25);
 				
-				var q=x.insertCell(26);
 				// 1.0.0.31 add start
-				var h2hStatus=x.insertCell(27);
-				var postApprRejSource=x.insertCell(28);
-				var postApprRejUser=x.insertCell(29);
+				var h2hStatus=x.insertCell(26);
+				var postApprRejSource=x.insertCell(27);
+				var postApprRejUser=x.insertCell(28);
 				// 1.0.0.31 add end
+				var q=x.insertCell(29);
+				
 				var c=x.insertCell(30);
 				var cx=x.insertCell(31);//added by 1.0.0.15
 				c.style.display="none";
@@ -1016,12 +1017,12 @@ form[name="paymentForm"] #listData input[value="..."].blueBotton, form[name="pay
 				var o=x.insertCell(23);
 				
 				var ab=x.insertCell(24);
-				var q=x.insertCell(25);
 				// 1.0.0.31 add start
-				var h2hStatus=x.insertCell(26);
-				var postApprRejSource=x.insertCell(27);
-				var postApprRejUser=x.insertCell(28);
+				var h2hStatus=x.insertCell(25);
+				var postApprRejSource=x.insertCell(26);
+				var postApprRejUser=x.insertCell(27);
 				// 1.0.0.31 add end
+				var q=x.insertCell(28);
 				var c=x.insertCell(29);
 				c.style.display="none";
 								
