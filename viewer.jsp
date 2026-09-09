@@ -207,10 +207,17 @@
 							while (itrSortedColumn.hasNext()) {
 								String headerCol = (String) itrSortedColumn.next();
 								String colMapValue = (String) columnMap.get(headerCol);
-								// Skip header display for INSTRUMENT_NO, INSTRUMENT_DATE, PRINTED
+								// Skip header display for INSTRUMENT_NO, INSTRUMENT_DATE, PRINTED, H2H_STATUS but render empty cells
 								if(colMapValue != null && (colMapValue.startsWith("INSTRUMENT_NO") || 
 								   colMapValue.startsWith("INSTRUMENT_DATE") || 
-								   colMapValue.startsWith("PRINTED"))) {
+								   colMapValue.startsWith("PRINTED") ||
+								   colMapValue.startsWith("H2H_STATUS") ||
+								   colMapValue.startsWith("H2H STATUS"))) {
+						%>
+						<td align="left">
+							&nbsp;
+						</td>
+						<%
 									continue;
 								}
 								// Format long header names to 2 lines
@@ -407,10 +414,5 @@
 	<script src="vmenu/js/toggleMenu.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/slimscroll.js"></script>
-
-
-
-
-
 
 
