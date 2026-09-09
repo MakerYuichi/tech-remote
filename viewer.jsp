@@ -206,15 +206,10 @@
 							Iterator itrSortedColumn = columnList.iterator();
 							while (itrSortedColumn.hasNext()) {
 								String headerCol = (String) itrSortedColumn.next();
-								// Add empty cells for hidden columns to maintain spacing
+								// Skip header display for INSTRUMENT_NO, INSTRUMENT_DATE, PRINTED
 								if(columnMap.get(headerCol).equals("INSTRUMENT_NO~10") || 
 								   columnMap.get(headerCol).equals("INSTRUMENT_DATE~11") || 
 								   columnMap.get(headerCol).equals("PRINTED~12")) {
-						%>
-						<td align="left" style="width: 0; padding: 0; border: none; display: none;">
-							&nbsp;
-						</td>
-						<%
 									continue;
 								}
 								// Format long header names to 2 lines
@@ -294,16 +289,31 @@
 									if(!columnMap.get(colName).equals("BANKID~10")&&!columnMap.get(colName).equals("INSTRUMENT_NO~10")&&!columnMap.get(colName).equals("INSTRUMENT_DATE~11")&&!columnMap.get(colName).equals("PRINTED~12"))/* 1.0.0.1 */
 									{%>
 										<td align="left" style="word-break: break-all;" >
-										&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td>
+										&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td><script>
+									var row = document.getElementById("viewerList");
+									//Below changes done by Ravikant
+									//if(row.cells[9]){/* 1.0.0.1 */
+	    								//row.deleteCell(9);/* 1.0.0.1 */
+	// 									row.deleteCell(8);
+	// 									row.deleteCell(8);
+									//}
+									if(row.cells.length>8){
+										row.cells[9].innerHTML = "";
+										row.cells[10].innerHTML = "";
+										row.cells[11].innerHTML = "";
+										//row.cells[14].innerHTML = "";
+										
+
+										}
+									 </script>
 									<%
 									}
 									else if(columnMap.get(colName).equals("INSTRUMENT_NO~10") || 
 											columnMap.get(colName).equals("INSTRUMENT_DATE~11") || 
 											columnMap.get(colName).equals("PRINTED~12")) {
 									%>
-										<td align="left" style="width: 0; padding: 0; border: none; display: none;">
-										&nbsp;
-										</td>
+										<td align="left" style="word-break: break-all;" >
+										&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td>
 									<%
 									}
 										if(columnMap.get(colName).equals("PRINTED~12"))
