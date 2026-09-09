@@ -276,14 +276,14 @@
 									<logic:equal name="activityInfo" property="activityType" value="REFUND">
 									<%
 									
-									if(!columnMap.get(colName).equals("BANKID~9")&&!columnMap.get(colName).equals("INSTRUMENT_NO~10")&&!columnMap.get(colName).equals("INSTRUMENT_DATE~11")&&!columnMap.get(colName).equals("PRINTED~12"))/* 1.0.0.1 */
+									if(!columnMap.get(colName).equals("BANKID~9")&&!columnMap.get(colName).equals("INSTRUMENT_NO~10")&&!columnMap.get(colName).equals("INSTRUMENT_DATE~11")&&!columnMap.get(colName).equals("PRINTED~12")&&!columnMap.get(colName).equals("H2H_STATUS~13")&&!columnMap.get(colName).equals("POST_APPR_REJ_SOURCE~14")&&!columnMap.get(colName).equals("POST_APPR_REJ_USER~15"))/* 1.0.0.1, 1.0.0.4, 1.0.0.5 */
 									{%>
 										<td align="left" style="word-break: break-all;" nowrap>
 										&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td><script>
 									var row = document.getElementById("viewerList");
 									//Below changes done by Ravikant
-									if(row.cells[9]){/* 1.0.0.1 */
-	    								row.deleteCell(9);/* 1.0.0.1 */
+									if(row.cells[11]){/* 1.0.0.1 *//* 1.0.0.4 updated for H2H STATUS, POST APPROVAL REJECTION SOURCE, POST APPROVAL REJECTION USER *//* 1.0.0.5 */
+	    								row.deleteCell(11);/* 1.0.0.1 *//* 1.0.0.4, 1.0.0.5 updated */
 	// 									row.deleteCell(8);
 	// 									row.deleteCell(8);
 									}
@@ -408,6 +408,8 @@
 	<script src="vmenu/js/toggleMenu.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/slimscroll.js"></script>
+
+
 
 
 
