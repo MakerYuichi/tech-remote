@@ -3,7 +3,6 @@
   1.0.0.1	07-DEC-2018	    Apurva			      QA bugId 63100 LMS > Refund Viewer >" Status" Column is missing and also showing some unusual data
   1.0.0.2	22-APR-2019	    KAPIL MIDDHA	      pass INSTRUMENT_NAME in request of cashReceipt.do?actionPerformed=displayCashReceipt.....
   1.0.0.3	29-APR-2019	    Apurva                enable link only in case of otc
-  1.0.0.4	02-Sep-2026	    Sanchi Agarwal         CR - H2H STATUS, POST APPROVAL REJECTION SOURCE and POST APPROVAL REJECTION USER columns will now display on Refund Viewer screen
 
   -->
 
@@ -206,13 +205,18 @@
 									.getAttribute("colSortedColumns");
 							Iterator itrSortedColumn = columnList.iterator();
 							while (itrSortedColumn.hasNext()) {
-							
+								String headerCol = (String) itrSortedColumn.next();
+								// Skip headers for INSTRUMENT_NO, INSTRUMENT_DATE, PRINTED
+								if(!columnMap.get(headerCol).equals("INSTRUMENT_NO~10") && 
+								   !columnMap.get(headerCol).equals("INSTRUMENT_DATE~11") && 
+								   !columnMap.get(headerCol).equals("PRINTED~12")) {
 						%>
 						
 						<td align="left">
-							&nbsp;<%=itrSortedColumn.next()%>
+							&nbsp;<%=headerCol%>
 						</td>
 						<%
+								}
 							}
 						%>
 						<logic:notEmpty name="receiptCancellation">
@@ -276,15 +280,9 @@
 									<logic:equal name="activityInfo" property="activityType" value="REFUND">
 									<%
 									
-									if(!columnMap.get(colName).equals("BANKID~9")&&!columnMap.get(colName).equals("INSTRUMENT_NO~10")&&!columnMap.get(colName).equals("INSTRUMENT_DATE~11")&&!columnMap.get(colName).equals("PRINTED~12")&&!columnMap.get(colName).equals("H2H_STATUS~13")&&!columnMap.get(colName).equals("POST_APPR_REJ_SOURCE~14")&&!columnMap.get(colName).equals("POST_APPR_REJ_USER~15"))/* 1.0.0.1, 1.0.0.4 */
+									if(!columnMap.get(colName).equals("BANKID~10")&&!columnMap.get(colName).equals("INSTRUMENT_NO~11")&&!columnMap.get(colName).equals("INSTRUMENT_DATE~12")&&!columnMap.get(colName).equals("PRINTED~13"))/* 1.0.0.1 */
 									{%>
-										<td align="left" style="word-break: break-all;" nowrap>
-										&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td>
-									<%
-									}
-									else if(columnMap.get(colName).equals("BANKID~9")||columnMap.get(colName).equals("INSTRUMENT_NO~10")||columnMap.get(colName).equals("INSTRUMENT_DATE~11")||columnMap.get(colName).equals("PRINTED~12")||columnMap.get(colName).equals("H2H_STATUS~13")||columnMap.get(colName).equals("POST_APPR_REJ_SOURCE~14")||columnMap.get(colName).equals("POST_APPR_REJ_USER~15"))/* 1.0.0.4 - Display these columns */
-									{%>
-										<td align="left" style="word-break: break-all;" nowrap>
+										<td align="left" style="word-break: break-all;" >
 										&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td>
 									<%
 									}
@@ -348,10 +346,10 @@
 					    </script> --%>
 						
 						<% if(enable.equals("N") && rowMap.get(columnMap.get("STATUS")).equals("APPROVED")){ %>
-						<td><span style='float:left;width:50px;text-align:center;'><input style='width:60px' type='button' name='print' value='Print' id='<%=rowMap.get(columnMap.get("ACTIVITY ID"))+"~"+rowMap.get(columnMap.get("RECEIPT AMT"))+"~"+rowMap.get(columnMap.get("BANKID"))+"~"+rowMap.get(columnMap.get("INSTRUMENT_NO"))+"~"+rowMap.get(columnMap.get("INSTRUMENT_DATE"))%>'  maxlength='20' size='25' onclick='return printOption(this);'/></span></td>
+						<td><span style='float:left;width:50px;text-align:center;'><input style='width:60px' type='button' name='print' value='Print' id='<%=rowMap.get(columnMap.get("ACTIVITY ID"))+"~"+rowMap.get(columnMap.get("RECEIPT AMT"))+"~"+rowMap.get(columnMap.get("BANKID"))+"~"+rowMap.get(columnMap.get("INSTRUMENT_NO"))+"~"+rowMap.get(columnMap.get("INSTRUMENT_DATE"))+"~"+(rowMap.get(columnMap.get("POST APPROVAL REJECTION SOURCE"))!=null?rowMap.get(columnMap.get("POST APPROVAL REJECTION SOURCE")):"")+"~"+(rowMap.get(columnMap.get("POST APPROVAL REJECTION USER"))!=null?rowMap.get(columnMap.get("POST APPROVAL REJECTION USER")):"")%>'  maxlength='20' size='25' onclick='return printOption(this);'/></span></td>
 						<%}
 						else{%>
-						<td><span style='float:left;width:50px;text-align:center;'><input style='width:60px' disabled="disabled" type='button' name='print' value='Print' id='<%=rowMap.get(columnMap.get("ACTIVITY ID"))+"~"+rowMap.get(columnMap.get("RECEIPT AMT"))+"~"+rowMap.get(columnMap.get("BANKID"))+"~"+rowMap.get(columnMap.get("INSTRUMENT_NO"))+"~"+rowMap.get(columnMap.get("INSTRUMENT_DATE"))%>'  maxlength='20' size='25' onclick='return printOption(this);'/></span></td>
+						<td><span style='float:left;width:50px;text-align:center;'><input style='width:60px' disabled="disabled" type='button' name='print' value='Print' id='<%=rowMap.get(columnMap.get("ACTIVITY ID"))+"~"+rowMap.get(columnMap.get("RECEIPT AMT"))+"~"+rowMap.get(columnMap.get("BANKID"))+"~"+rowMap.get(columnMap.get("INSTRUMENT_NO"))+"~"+rowMap.get(columnMap.get("INSTRUMENT_DATE"))+"~"+(rowMap.get(columnMap.get("POST APPROVAL REJECTION SOURCE"))!=null?rowMap.get(columnMap.get("POST APPROVAL REJECTION SOURCE")):"")+"~"+(rowMap.get(columnMap.get("POST APPROVAL REJECTION USER"))!=null?rowMap.get(columnMap.get("POST APPROVAL REJECTION USER")):"")%>'  maxlength='20' size='25' onclick='return printOption(this);'/></span></td>
 						<%} }%>
 					</tr>
 					<%
@@ -406,9 +404,6 @@
 	<script src="vmenu/js/toggleMenu.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/slimscroll.js"></script>
-
-
-
 
 
 
