@@ -294,15 +294,26 @@
 									<logic:equal name="activityInfo" property="activityType" value="REFUND">
 									<%
 									String colMapValue = (String) columnMap.get(colName);
-									// Capture PRINTED value for button logic
-									if(colMapValue != null && colMapValue.startsWith("PRINTED"))
-									{
-										enable = (String)rowMap.get(columnMap.get(colName));
-										System.out.println(enable);
+									// Skip rendering <td> for INSTRUMENT_NO, INSTRUMENT_DATE, PRINTED, H2H_STATUS
+									if(colMapValue != null && (colMapValue.startsWith("INSTRUMENT_NO") || 
+									   colMapValue.startsWith("INSTRUMENT_DATE") || 
+									   colMapValue.startsWith("PRINTED") ||
+									   colMapValue.startsWith("H2H_STATUS") ||
+									   colMapValue.startsWith("H2H STATUS"))) {
+										// Don't render td for these columns, but still capture PRINTED
+										if(colMapValue.startsWith("PRINTED")) {
+											enable = (String)rowMap.get(columnMap.get(colName));
+											System.out.println(enable);
+										}
 									}
+									else {
+										// Render td for all other columns
 									%>
 										<td align="left" style="word-break: break-all;" >
 										&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td>
+									<%
+									}
+									 %>
 									
 									</logic:equal>
 									<logic:notEqual name="activityInfo" property="activityType" value="REFUND">
@@ -414,6 +425,9 @@
 	<script src="vmenu/js/toggleMenu.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/slimscroll.js"></script>
+
+
+
 
 
 
