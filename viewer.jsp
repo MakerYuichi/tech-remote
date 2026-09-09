@@ -206,10 +206,11 @@
 							Iterator itrSortedColumn = columnList.iterator();
 							while (itrSortedColumn.hasNext()) {
 								String headerCol = (String) itrSortedColumn.next();
+								String colMapValue = (String) columnMap.get(headerCol);
 								// Skip header display for INSTRUMENT_NO, INSTRUMENT_DATE, PRINTED
-								if(columnMap.get(headerCol).equals("INSTRUMENT_NO~10") || 
-								   columnMap.get(headerCol).equals("INSTRUMENT_DATE~11") || 
-								   columnMap.get(headerCol).equals("PRINTED~12")) {
+								if(colMapValue != null && (colMapValue.startsWith("INSTRUMENT_NO") || 
+								   colMapValue.startsWith("INSTRUMENT_DATE") || 
+								   colMapValue.startsWith("PRINTED"))) {
 									continue;
 								}
 								// Format long header names to 2 lines
@@ -285,44 +286,16 @@
 									<logic:notEqual name="activityInfo" property="activityType" value="OTC">
 									<logic:equal name="activityInfo" property="activityType" value="REFUND">
 									<%
-									
-									if(!columnMap.get(colName).equals("BANKID~10")&&!columnMap.get(colName).equals("INSTRUMENT_NO~10")&&!columnMap.get(colName).equals("INSTRUMENT_DATE~11")&&!columnMap.get(colName).equals("PRINTED~12"))/* 1.0.0.1 */
-									{%>
-										<td align="left" style="word-break: break-all;" >
-										&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td><script>
-									var row = document.getElementById("viewerList");
-									//Below changes done by Ravikant
-									//if(row.cells[9]){/* 1.0.0.1 */
-	    								//row.deleteCell(9);/* 1.0.0.1 */
-	// 									row.deleteCell(8);
-	// 									row.deleteCell(8);
-									//}
-									if(row.cells.length>8){
-										row.cells[9].innerHTML = "";
-										row.cells[10].innerHTML = "";
-										row.cells[11].innerHTML = "";
-										//row.cells[14].innerHTML = "";
-										
-
-										}
-									 </script>
-									<%
+									String colMapValue = (String) columnMap.get(colName);
+									// Capture PRINTED value for button logic
+									if(colMapValue != null && colMapValue.startsWith("PRINTED"))
+									{
+										enable = (String)rowMap.get(columnMap.get(colName));
+										System.out.println(enable);
 									}
-									else if(columnMap.get(colName).equals("INSTRUMENT_NO~10") || 
-											columnMap.get(colName).equals("INSTRUMENT_DATE~11") || 
-											columnMap.get(colName).equals("PRINTED~12")) {
 									%>
 										<td align="left" style="word-break: break-all;" >
 										&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td>
-									<%
-									}
-										if(columnMap.get(colName).equals("PRINTED~12"))
-										{
-											enable = (String)rowMap.get(columnMap.get(colName));
-											System.out.println(enable);
-										}
-									
-									 %>
 									
 									</logic:equal>
 									<logic:notEqual name="activityInfo" property="activityType" value="REFUND">
