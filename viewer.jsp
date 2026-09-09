@@ -275,26 +275,16 @@
 									<logic:notEqual name="activityInfo" property="activityType" value="OTC">
 									<logic:equal name="activityInfo" property="activityType" value="REFUND">
 									<%
-									
-									if(!columnMap.get(colName).equals("BANKID~9")&&!columnMap.get(colName).equals("INSTRUMENT_NO~10")&&!columnMap.get(colName).equals("INSTRUMENT_DATE~11")&&!columnMap.get(colName).equals("PRINTED~12"))/* 1.0.0.1, 1.0.0.4 */
-									{%>
-										<td align="left" style="word-break: break-all;" nowrap>
-										&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td>
+									%>
+									<td align="left" style="word-break: break-all;" nowrap>
+									&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td>
 									<%
+									if(columnMap.get(colName).equals("PRINTED~12"))
+									{
+										enable = (String)rowMap.get(columnMap.get(colName));
+										System.out.println(enable);
 									}
-									else if(columnMap.get(colName).equals("BANKID~9")||columnMap.get(colName).equals("INSTRUMENT_NO~10")||columnMap.get(colName).equals("INSTRUMENT_DATE~11")||columnMap.get(colName).equals("PRINTED~12")||columnMap.get(colName).equals("H2H STATUS~13")||columnMap.get(colName).equals("POST APPROVAL REJECTION SOURCE~14")||columnMap.get(colName).equals("POST APPROVAL REJECTION USER~15"))/* 1.0.0.1, 1.0.0.4, 1.0.0.5 */
-									{%>
-										<td align="left" style="word-break: break-all;" nowrap>
-										&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td>
-									<%
-									}
-										if(columnMap.get(colName).equals("PRINTED~12"))
-										{
-											enable = (String)rowMap.get(columnMap.get(colName));
-											System.out.println(enable);
-										}
-									
-									 %>
+									%>
 									
 									</logic:equal>
 									<logic:notEqual name="activityInfo" property="activityType" value="REFUND">
@@ -406,6 +396,8 @@
 	<script src="vmenu/js/toggleMenu.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/slimscroll.js"></script>
+
+
 
 
 
