@@ -3,7 +3,7 @@
   1.0.0.1	07-DEC-2018	    Apurva			      QA bugId 63100 LMS > Refund Viewer >" Status" Column is missing and also showing some unusual data
   1.0.0.2	22-APR-2019	    KAPIL MIDDHA	      pass INSTRUMENT_NAME in request of cashReceipt.do?actionPerformed=displayCashReceipt.....
   1.0.0.3	29-APR-2019	    Apurva                enable link only in case of otc
-  1.0.0.4	02-Sep-2026	    Sanchi Agarwal         CR - Updated column positions for POST APPROVAL REJECTION SOURCE and POST APPROVAL REJECTION USER columns on Refund Viewer screen
+  1.0.0.4	02-Sep-2026	    Sanchi Agarwal         CR - H2H STATUS, POST APPROVAL REJECTION SOURCE and POST APPROVAL REJECTION USER columns will now display on Refund Viewer screen
 
   -->
 
@@ -276,21 +276,21 @@
 									<logic:equal name="activityInfo" property="activityType" value="REFUND">
 									<%
 									
-									if(!columnMap.get(colName).equals("BANKID~11")&&!columnMap.get(colName).equals("INSTRUMENT_NO~12")&&!columnMap.get(colName).equals("INSTRUMENT_DATE~13")&&!columnMap.get(colName).equals("PRINTED~14"))/* 1.0.0.1 *//* 1.0.0.4 position updated for POST APPROVAL REJECTION SOURCE and POST APPROVAL REJECTION USER */
+									if(!columnMap.get(colName).equals("BANKID~9")&&!columnMap.get(colName).equals("INSTRUMENT_NO~10")&&!columnMap.get(colName).equals("INSTRUMENT_DATE~11")&&!columnMap.get(colName).equals("PRINTED~12"))/* 1.0.0.1 */
 									{%>
 										<td align="left" style="word-break: break-all;" nowrap>
 										&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td><script>
 									var row = document.getElementById("viewerList");
 									//Below changes done by Ravikant
-									if(row.cells[11]){/* 1.0.0.1 *//* 1.0.0.4 position updated */
-	    								row.deleteCell(11);/* 1.0.0.1 *//* 1.0.0.4 position updated */
+									if(row.cells[9]){/* 1.0.0.1 */
+	    								row.deleteCell(9);/* 1.0.0.1 */
 	// 									row.deleteCell(8);
 	// 									row.deleteCell(8);
 									}
 									 </script>
 									<%
 									}
-										if(columnMap.get(colName).equals("PRINTED~14")) /* 1.0.0.4 position updated */
+										if(columnMap.get(colName).equals("PRINTED~12"))
 										{
 											enable = (String)rowMap.get(columnMap.get(colName));
 											System.out.println(enable);
@@ -340,7 +340,7 @@
 						<% if(screenId.equals("1000000043")){ %>
 						<script>
 							var row = document.getElementById("viewerList");
-							newRow = row.insertCell(11);//1.0.0.1 //1.0.0.4 position updated
+							newRow = row.insertCell(9);//1.0.0.1
 						</script>
 						
 						
@@ -408,6 +408,7 @@
 	<script src="vmenu/js/toggleMenu.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/slimscroll.js"></script>
+
 
 
 
