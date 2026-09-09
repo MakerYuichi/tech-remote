@@ -206,17 +206,28 @@
 							Iterator itrSortedColumn = columnList.iterator();
 							while (itrSortedColumn.hasNext()) {
 								String headerCol = (String) itrSortedColumn.next();
-								// Skip headers for INSTRUMENT_NO, INSTRUMENT_DATE, PRINTED
-								if(!columnMap.get(headerCol).equals("INSTRUMENT_NO~10") && 
-								   !columnMap.get(headerCol).equals("INSTRUMENT_DATE~11") && 
-								   !columnMap.get(headerCol).equals("PRINTED~12")) {
+								// Add empty cells for hidden columns to maintain spacing
+								if(columnMap.get(headerCol).equals("INSTRUMENT_NO~10") || 
+								   columnMap.get(headerCol).equals("INSTRUMENT_DATE~11") || 
+								   columnMap.get(headerCol).equals("PRINTED~12")) {
+						%>
+						<td align="left" style="width: 0; padding: 0; border: none; display: none;">
+							&nbsp;
+						</td>
+						<%
+									continue;
+								}
+								// Format long header names to 2 lines
+								String displayHeader = headerCol;
+								if(headerCol.contains("POST APPROVAL REJECTION")) {
+									displayHeader = headerCol.replace("POST APPROVAL REJECTION", "POST APPROVAL<br/>REJECTION");
+								}
 						%>
 						
 						<td align="left">
-							&nbsp;<%=headerCol%>
+							&nbsp;<%=displayHeader%>
 						</td>
 						<%
-								}
 							}
 						%>
 						<logic:notEmpty name="receiptCancellation">
@@ -280,10 +291,19 @@
 									<logic:equal name="activityInfo" property="activityType" value="REFUND">
 									<%
 									
-									if(!columnMap.get(colName).equals("BANKID~10")&&!columnMap.get(colName).equals("INSTRUMENT_NO~11")&&!columnMap.get(colName).equals("INSTRUMENT_DATE~12")&&!columnMap.get(colName).equals("PRINTED~13"))/* 1.0.0.1 */
+									if(!columnMap.get(colName).equals("BANKID~10")&&!columnMap.get(colName).equals("INSTRUMENT_NO~10")&&!columnMap.get(colName).equals("INSTRUMENT_DATE~11")&&!columnMap.get(colName).equals("PRINTED~12"))/* 1.0.0.1 */
 									{%>
 										<td align="left" style="word-break: break-all;" >
 										&nbsp;<%=rowMap.get(columnMap.get(colName)) != null ? rowMap.get(columnMap.get(colName)): ""%></td>
+									<%
+									}
+									else if(columnMap.get(colName).equals("INSTRUMENT_NO~10") || 
+											columnMap.get(colName).equals("INSTRUMENT_DATE~11") || 
+											columnMap.get(colName).equals("PRINTED~12")) {
+									%>
+										<td align="left" style="width: 0; padding: 0; border: none; display: none;">
+										&nbsp;
+										</td>
 									<%
 									}
 										if(columnMap.get(colName).equals("PRINTED~12"))
@@ -404,6 +424,8 @@
 	<script src="vmenu/js/toggleMenu.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/slimscroll.js"></script>
+
+
 
 
 
