@@ -207,7 +207,7 @@
 							while (itrSortedColumn.hasNext()) {
 								String headerCol = (String) itrSortedColumn.next();
 								String colMapValue = (String) columnMap.get(headerCol);
-								// Skip header display for INSTRUMENT_NO, INSTRUMENT_DATE, PRINTED, H2H_STATUS but render empty cells
+								// For INSTRUMENT_NO, INSTRUMENT_DATE, PRINTED, H2H_STATUS: render empty header cells
 								if(colMapValue != null && (colMapValue.startsWith("INSTRUMENT_NO") || 
 								   colMapValue.startsWith("INSTRUMENT_DATE") || 
 								   colMapValue.startsWith("PRINTED") ||
@@ -218,19 +218,19 @@
 							&nbsp;
 						</td>
 						<%
-									continue;
-								}
-								// Format long header names to 2 lines
-								String displayHeader = headerCol;
-								if(headerCol.contains("POST APPROVAL REJECTION")) {
-									displayHeader = headerCol.replace("POST APPROVAL REJECTION", "POST APPROVAL<br/>REJECTION");
-								}
+								} else {
+									// Format long header names to 2 lines
+									String displayHeader = headerCol;
+									if(headerCol.contains("POST APPROVAL REJECTION")) {
+										displayHeader = headerCol.replace("POST APPROVAL REJECTION", "POST APPROVAL<br/>REJECTION");
+									}
 						%>
 						
 						<td align="left">
 							&nbsp;<%=displayHeader%>
 						</td>
 						<%
+								}
 							}
 						%>
 						<logic:notEmpty name="receiptCancellation">
@@ -414,5 +414,7 @@
 	<script src="vmenu/js/toggleMenu.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/slimscroll.js"></script>
+
+
 
 
