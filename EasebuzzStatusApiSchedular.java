@@ -6,7 +6,7 @@
 +  INITIAL VERSION : 1.0.0.0
 +  **********************************************************************************************************************************
 +  VERSION NO   UPDATED BY       	UPDATED ON      REASON FOR CHANGE
-+  1.0.0.1		Sanchi Agarwal		  1-Oct-2026		   Initial Version
++  1.0.0.1		Sanchi Agarwal		1-Oct-2026		Initial Version
    **********************************************************************************************************************************
  */
 
@@ -39,18 +39,17 @@ public class EasebuzzStatusApiSchedular implements Job {
 
 	protected static Logger log = Logger.getLogger(EasebuzzStatusApiSchedular.class);
 	 static Locale locale = new Locale("en","US");
-	 static Map dbConnectionMapLMS = null;
 	 InvoiceDetailsBO invoiceDetailsBo=new InvoiceDetailsBO();
+	 Map dbConnectionMap = new HashMap();
 	 ResourceBundle commonApplicationResource = ResourceBundle.getBundle("resourceProperties.commonApplicationResource",locale);
 	 CustomerBO customerBO = new CustomerBO();
-	 Map dbConnectionMap = new HashMap();
 	 
 	 @SuppressWarnings("unchecked")
 	 @Override
      public void execute(JobExecutionContext context) throws JobExecutionException {
 		 log.info("Start - EasebuzzStatusApiSchedular");
 		 try {
-			 dbConnectionMapLMS =  CommonBean.getDBConnectionMap("dbConnection/DBConnectionMapLMS", locale);
+			 Map dbConnectionMapLMS =  CommonBean.getDBConnectionMap("dbConnection/DBConnectionMapLMS", locale);
  			Map returnMap=invoiceDetailsBo.getEaseBuzzStatusApi(dbConnectionMapLMS);
  			
  			String fromDate= returnMap.get("PC_FROM_DATE")!=null ?(String)returnMap.get("PC_FROM_DATE"):"";
