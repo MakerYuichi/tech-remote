@@ -7,7 +7,7 @@ package qc.common.servlet;
 +  INITIAL VERSION : 1.0.0.0
 +  **********************************************************************************************************************************
 +  VERSION NO   UPDATED BY       	UPDATED ON      REASON FOR CHANGE
-+  1.0.0.1		Sanchi Agarwal		  1-Oct-2026		     QR CODE
++  1.0.0.1		Sanchi Agarwal		1-Oct-2026		QR CODE 
   **********************************************************************************************************************************
 */ 
 import java.io.ByteArrayOutputStream;
@@ -45,7 +45,6 @@ public class EasebuzzInvoiceSchedulerINV extends TimerTask {
 	
 	protected static Logger log = Logger.getLogger(EasebuzzInvoiceSchedulerINV.class);
 	 static Locale locale = new Locale("en","US");
-	 static Map dbConnectionMapLMS = null;
 	 InvoiceDetailsBO invoiceDetailsBo=new InvoiceDetailsBO();
 	 ResourceBundle commonApplicationResource = ResourceBundle.getBundle("resourceProperties.commonApplicationResource",locale);
 	 
@@ -55,7 +54,7 @@ public class EasebuzzInvoiceSchedulerINV extends TimerTask {
 	    	 log.info("Start - EasebuzzInvoiceSchedulerINV");
 	    		try
 	    		{ 
-	    			dbConnectionMapLMS =  CommonBean.getDBConnectionMap("dbConnection/DBConnectionMapLMS", locale);
+	    			Map dbConnectionMapLMS =  CommonBean.getDBConnectionMap("dbConnection/DBConnectionMapLMS", locale);
 	    			Map returnMap=invoiceDetailsBo.getEaseBuzzDtls(dbConnectionMapLMS);
 	    	    	if(returnMap!=null&& returnMap.get("PCUR_EB_DTLS")!=null)
 	    	    	{
