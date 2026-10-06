@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xmlns:web_1="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="starter_app" version="2.5">
+	<display-name>Webapp template</display-name>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+            classpath:springConfigration/applicationContext.xml
+            classpath:springConfigration/hibernate-context.xml
+        </param-value>
+	</context-param>
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<!-- 3 Aug added by tripti -->
+	<filter>
+		<filter-name>Compress</filter-name>
+		<!-- for jboss -->
+		<filter-class>com.qc.gzipCompress.GZIPFilter</filter-class>
+		<!-- for weblogic <filter-class>nagiworld.net.filters.gzip.GZIPFilter</filter-class> -->
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>Compress</filter-name>
+		<url-pattern>*.sprg</url-pattern>
+    </filter-mapping> 
+	<!-- <filter-mapping>
+		<filter-name>Compress</filter-name>
+		<url-pattern>*.js</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Compress</filter-name>
+		<url-pattern>*.css</url-pattern>
+	</filter-mapping> -->
+	<filter>
+		<filter-name>ResponseFilter</filter-name>
+		<filter-class>com.qc.starter.filter.ResponseFilter</filter-class>
+		<init-param>
+			<param-name>test-param</param-name>
+			<param-value>This parameter is for testing.</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>ResponseFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>XSSFilter</filter-name>
+		<filter-class>com.qc.starter.filter.XSSFilter</filter-class>
+		<init-param>
+			<param-name>test-param</param-name>
+			<param-value>This parameter is for testing2.</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>XSSFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.qc.starter.servlet.ValidateSession</listener-class>
+	</listener>
+	<servlet>
+	    <servlet-name>action</servlet-name>
+	    <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+	    
+	    <init-param>
+	      <param-name>config</param-name>
+	      <param-value>/WEB-INF/config/struts-config-common.xml,/WEB-INF/config/struts-config-llm.xml,/WEB-INF/config/struts-config-llmhome.xml,/WEB-INF/config/struts-config-los.xml,/WEB-INF/config/struts-config-lms.xml,/WEB-INF/config/struts-config-csm.xml,/WEB-INF/config/struts-config-gmm.xml,/WEB-INF/config/struts-config-bup.xml,/WEB-INF/config/struts-config-collection.xml,/WEB-INF/config/struts-config-dashboard.xml,/WEB-INF/config/struts-config-grf.xml,/WEB-INF/config/struts-config-lmsins.xml,/WEB-INF/config/struts-config-losins.xml,/WEB-INF/config/struts-config-prospect.xml,/WEB-INF/config/struts-config-investment.xml,/WEB-INF/config/struts-config-customer.xml,/WEB-INF/config/struts-config-equity.xml,/WEB-INF/config/struts-config-limit.xml,/WEB-INF/config/struts-config-group.xml,/WEB-INF/config/struts-config-quotation.xml</param-value>
+	    </init-param>
+	    
+	    <init-param>
+	      <param-name>debug</param-name>
+	      <param-value>0</param-value>
+	    </init-param>
+	    
+	    <init-param>
+	      <param-name>detail</param-name>
+	      <param-value>3</param-value>
+	    </init-param>
+	    <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+	    <servlet-name>action</servlet-name>
+	    <url-pattern>*.do</url-pattern>
+  	</servlet-mapping>
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springConfigration/springmvc-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>*.sprg</url-pattern>
+	</servlet-mapping>
+	
+	 <servlet>
+	  	<description>
+	  	</description>
+	  	<display-name>ValidateOTP</display-name>
+	  	<servlet-name>ValidateOTP</servlet-name>
+	  	<servlet-class>qc.llm.controller.action.ValidateOTP</servlet-class>
+	  </servlet>
+	
+	
+	
+  	<servlet>
+		<servlet-name>SessionExtenderServlet</servlet-name>
+		<servlet-class>qc.common.controller.action.SessionExtenderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SessionExtenderServlet</servlet-name>
+		<url-pattern>/sessionExtenderServlet</url-pattern>
+	</servlet-mapping>
+	<!--  Bug 162584: MIFIN EOD (Backend-scheduled EOD force logout ) -->
+	<servlet>
+		<servlet-name>BackendEodStatusServlet</servlet-name>
+		<servlet-class>qc.common.controller.action.BackendEodStatusServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BackendEodStatusServlet</servlet-name>
+		<url-pattern>/backendEodStatusServlet</url-pattern>
+	</servlet-mapping>
+	<!--  Bug 162584: MIFIN EOD (Backend-scheduled EOD force logout ) -->
+	<servlet-mapping>
+	  	<servlet-name>ValidateOTP</servlet-name>
+	  	<url-pattern>/ValidateOTP</url-pattern>
+	</servlet-mapping>
+	
+	<!-- webservice configurev start -->
+	 <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>BroadCastEodMessageServlet</servlet-name>
+    <servlet-class>qc.webService.controller.action.BroadCastEodMessageServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>BroadcastServiceRequestServlet</servlet-name>
+    <servlet-class>qc.webService.controller.action.BroadcastServiceRequestServlet</servlet-class>
+  </servlet>
+	 <servlet-mapping>
+    <servlet-name>BroadCastEodMessageServlet</servlet-name>
+    <url-pattern>/BroadCastEodMessageServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BroadcastServiceRequestServlet</servlet-name>
+    <url-pattern>/BroadcastServiceRequestServlet</url-pattern>
+  </servlet-mapping>
+   <!-- webservice configurev end -->
+	<servlet>
+	  <servlet-name>applicationSetting</servlet-name>
+	  <servlet-class>qc.common.util.LLMApplicationInformation</servlet-class>
+	  <load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>loadApplicationServlet</servlet-name>
+		<servlet-class>qc.batchUpload.controller.action.servlet.LoadApplicationServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+    <servlet-name>VerificationAgencyServlet</servlet-name>
+    <url-pattern>/VerificationAgencyServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BankIfscAndMicrServlet</servlet-name>
+    <url-pattern>/BankIfscAndMicrServlet</url-pattern>
+  </servlet-mapping>
+	<servlet>
+		<servlet-name>batchUploadSchedulerServlet</servlet-name>
+		<servlet-class>qc.batchUpload.controller.action.servlet.BatchUploadSchedulerServlet</servlet-class>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>invoicePdfGeneraterServlet</servlet-name>
+		<servlet-class>qc.invoice.controller.servlet.InvoicePdfGeneraterServlet</servlet-class>
+		<load-on-startup>4</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>invoiceSchedulerServlet</servlet-name>
+		<servlet-class>qc.batchUpload.controller.action.servlet.InvoiceSchedulerServlet</servlet-class>
+		<load-on-startup>5</load-on-startup>
+	</servlet>
+		<servlet> 	
+		<servlet-name>ReportDownloadProcessServlet</servlet-name>
+		<servlet-class>qc.grf.controller.servlet.ReportDownloadProcessServlet</servlet-class>
+		 <init-param>
+	      <param-name>timeIntervalInMin</param-name>
+	      <param-value>1</param-value>
+	      </init-param>
+	      <init-param>
+	      <param-name>timeIntervalInHrs</param-name>
+	      <param-value>12</param-value>
+	      
+	    </init-param>
+	 <load-on-startup>6</load-on-startup> <!-- commented by ravinder only for DEV environment, uncomment if you are testing reports--><!-- uncommented by sunny --> 
+	</servlet>
+	
+	<!-- <servlet> 	
+		<servlet-name>VahanApiCallingScheduler</servlet-name>
+		<servlet-class>qc.common.servlet.VahanApiCallingScheduler</servlet-class>
+		 <init-param>
+	      <param-name>timeIntervalInMin</param-name>
+	      <param-value>1</param-value>
+	      </init-param>
+	      <init-param>
+	      <param-name>timeIntervalInHrs</param-name>
+	      <param-value>12</param-value>
+	      
+	    </init-param>
+	 <load-on-startup>11</load-on-startup> commented by ravinder only for DEV environment, uncomment if you are testing reportsuncommented by sunny 
+	</servlet> -->
+	
+	<servlet-mapping>
+		<servlet-name>ReportDownloadProcessServlet</servlet-name>
+		<url-pattern>/reportDownloadProcessServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>RecordActionServlet</servlet-name>
+		<servlet-class>qc.collection.controller.servlet.RecordActionServlet</servlet-class>
+	</servlet>
+	<servlet>
+	  <servlet-name>DeleteLoggerServlet</servlet-name>
+	  <servlet-class>logger.DeleteLoggersScheduler</servlet-class>
+      <load-on-startup>7</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RecordActionServlet</servlet-name>
+		<url-pattern>/recordActionServlet</url-pattern>
+	</servlet-mapping>
+		<servlet> 	
+		<servlet-name>CustomerCibilSchedular</servlet-name>
+		<servlet-class>qc.common.servlet.CustomerCibilSchedular</servlet-class>
+		 <init-param>
+	      <param-name>timeIntervalInMin</param-name>
+	      <param-value>1</param-value>
+	      </init-param>
+	      <init-param>
+	      <param-name>timeIntervalInHrs</param-name>
+	      <param-value>12</param-value>
+	      
+	    </init-param>
+	 <load-on-startup>8</load-on-startup> <!-- commented by ravinder only for DEV environment, uncomment if you are testing reports--><!-- uncommented by sunny --> 
+	</servlet>
+	<servlet> 	
+		<servlet-name>ReportsAutomizationSchedular</servlet-name>
+		<servlet-class>qc.common.servlet.ReportsAutomizationSchedular</servlet-class> 
+		 <init-param>
+	      <param-name>timeIntervalInMin</param-name>
+	      <param-value>1</param-value>
+	      </init-param>
+	 <load-on-startup>11</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>DeploymentConfigServlet</servlet-name>
+		<servlet-class>qc.common.servlet.DeploymentConfigServlet</servlet-class>
+		<load-on-startup>12</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>DashBoardServlet</servlet-name>
+		<servlet-class>qc.collection.controller.servlet.DashBoardServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DashBoardServlet</servlet-name>
+		<url-pattern>/dashBoardServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ReminderServlet</servlet-name>
+		<servlet-class>qc.collection.controller.servlet.ReminderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReminderServlet</servlet-name>
+		<url-pattern>/reminderServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>DependantComboServlet</servlet-name>
+		<servlet-class>qc.collection.controller.servlet.DependantComboServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DependantComboServlet</servlet-name>
+		<url-pattern>/dependantComboServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PrsDashBoardServlet</servlet-name>
+		<servlet-class>qc.prospect.controller.servlet.PMSDashBoardServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PrsDashBoardServlet</servlet-name>
+		<url-pattern>/prsdashBoardServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>PrsRecordActionServlet</servlet-name>
+		<servlet-class>qc.prospect.controller.servlet.PMSRecordActionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PrsRecordActionServlet</servlet-name>
+		<url-pattern>/prsrecordActionServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>PrsReminderServlet</servlet-name>
+		<servlet-class>qc.prospect.controller.servlet.PMSReminderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PrsReminderServlet</servlet-name>
+		<url-pattern>/prsreminderServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>PrsDependantComboServlet</servlet-name>
+		<servlet-class>qc.prospect.controller.servlet.PMSDependantComboServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PrsDependantComboServlet</servlet-name>
+		<url-pattern>/prsdependantComboServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>GmmDependantComboServlet</servlet-name>
+		<servlet-class>qc.gmm.controller.action.GmmDependantComboServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GmmDependantComboServlet</servlet-name>
+		<url-pattern>/gmmDependantComboServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>DashboardSectionServlet</servlet-name>
+		<servlet-class>qc.dashboard.controller.action.DashboardServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DashboardSectionServlet</servlet-name>
+		<url-pattern>/dashboardSections</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ExistingApplicantDetailServlet</servlet-name>
+		<servlet-class>qc.los.controller.action.ExistingApplicantDetailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ExistingApplicantDetailServlet</servlet-name>
+		<url-pattern>/existingApplicantDetail</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PMSExistingApplicantDetailServlet</servlet-name>
+		<servlet-class>qc.prospect.controller.action.PMSExistingApplicantDetailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PMSExistingApplicantDetailServlet</servlet-name>
+		<url-pattern>/pmsExistingApplicantDetail</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>GetMoratoriumDetailServlet</servlet-name>
+		<servlet-class>qc.los.controller.action.MoratoriumDetailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetMoratoriumDetailServlet</servlet-name>
+		<url-pattern>/getMoratoriumDetail</url-pattern>
+	</servlet-mapping>
+	<servlet>
+                                                <servlet-name>
+                                                                                ImageServlet
+                                                </servlet-name>
+                                                <servlet-class>
+                                                                                net.sf.jasperreports.j2ee.servlets.ImageServlet
+                                                </servlet-class>
+                  </servlet>         
+                  <servlet-mapping>
+                                                <servlet-name>
+                                                                                ImageServlet
+                                                </servlet-name>
+                                                <url-pattern>
+                                                                                /image
+                                                </url-pattern>
+                  </servlet-mapping>
+
+	
+	<servlet>
+     <servlet-name>photo</servlet-name> 
+     <servlet-class>qc.los.controller.action.ImageServlet</servlet-class> 
+           
+    </servlet> 
+     <servlet-mapping> 
+      <servlet-name>photo</servlet-name> 
+      <url-pattern>/photo</url-pattern> 
+     </servlet-mapping> 
+
+	<servlet>
+		<servlet-name>MobileVerificationAction</servlet-name>
+		<servlet-class>qc.los.controller.action.MobileVerificationAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MobileVerificationAction</servlet-name>
+		<url-pattern>/mobVerification</url-pattern>
+	</servlet-mapping> 
+ 	
+ 	<servlet>
+		<servlet-name>StoneWeightServlet</servlet-name>
+		<servlet-class>qc.los.controller.action.StoneWeightServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StoneWeightServlet</servlet-name>
+		<url-pattern>/stoneWeight</url-pattern>
+	</servlet-mapping> 
+	<!-- Navneet_Yadav : 05/08/2011 Start : Added for Object view servlet to view customer photo -->
+	<servlet>
+		<servlet-name>ObjectViewServlet</servlet-name>
+		<servlet-class>qc.los.controller.action.ObjectViewServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ObjectViewServlet</servlet-name>
+		<url-pattern>/ObjectViewServlet</url-pattern>
+	</servlet-mapping> 
+
+	 <servlet>
+     	<description>This is the description of my J2EE component</description>
+     	<display-name>This is the display name of my J2EE component</display-name>
+    	<servlet-name>EodSchedulerServlet</servlet-name>
+    	<servlet-class>qc.llm.controller.action.EodSchedulerServlet</servlet-class>
+  	</servlet>
+  	<!-- <servlet>
+    	<description>This is the description of my J2EE component</description>
+    	<display-name>This is the display name of my J2EE component</display-name>
+    	<servlet-name>EodProcessAction</servlet-name>
+    	<servlet-class>qc.llm.controller.action.EodProcessAction</servlet-class>
+  	</servlet> -->
+<!-- Ravinder add start -->
+	<servlet>
+		<servlet-name>CheckExistingRecordServlet</servlet-name>
+		<servlet-class>qc.gmm.controller.servlet.CheckExistingRecordServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CheckExistingRecordServlet</servlet-name>
+		<url-pattern>/checkExistingRecordServlet</url-pattern>
+	</servlet-mapping>
+<!-- Ravinder add end -->
+	<servlet-mapping>
+    	<servlet-name>EodSchedulerServlet</servlet-name>
+    	<url-pattern>/servlet/EodSchedulerServlet</url-pattern>
+  	</servlet-mapping>
+  	<!-- <servlet-mapping>
+    	<servlet-name>EodProcessAction</servlet-name>
+    	<url-pattern>/servlet/EodProcessAction</url-pattern>
+  	</servlet-mapping>  -->
+	<!-- End : 05/08/2011-->
+ 
+ <!-- ambarGupta : 18/06/2012 Start : Added for Object view servlet to HelpManual -->
+   <servlet>
+    <servlet-name>HelpManual</servlet-name>
+    <servlet-class>qc.common.controller.action.HelpManual</servlet-class>
+  </servlet>
+  
+   <servlet-mapping>
+    <servlet-name>HelpManual</servlet-name>
+    <url-pattern>/servlet/HelpManual</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description>BankDetailsServlet</description>
+    <display-name>BankDetailsServlet</display-name>
+    <servlet-name>BankDetailsServlet</servlet-name>
+    <servlet-class>qc.collection.controller.servlet.BankDetailsServlet</servlet-class>
+  </servlet>
+   <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>RepaymentScheduleDownloadServlet</servlet-name>
+    <servlet-class>qc.los.controller.action.RepaymentScheduleDownloadServlet</servlet-class>
+  </servlet>
+ 
+<servlet>
+    <description>VerificationAgencyAction</description>
+    <display-name>VerificationAgencyAction</display-name>
+    <servlet-name>VerificationAgencyServlet</servlet-name>
+    <servlet-class>qc.collection.controller.servlet.VerificationAgencyServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>BankIfscAndMicrServlet</description>
+    <display-name>BankIfscAndMicrServlet</display-name>
+    <servlet-name>BankIfscAndMicrServlet</servlet-name>
+    <servlet-class>qc.collection.controller.servlet.BankIfscAndMicrServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>QuotationWorkFlowAuth</servlet-name>
+    <servlet-class>qc.quotation.controller.action.QuotationWorkFlowAuth</servlet-class>
+  </servlet>
+    <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>QuotationWorkFlowAuth_Trf</servlet-name>
+    <servlet-class>qc.quotation_Trf.controller.action.QuotationWorkFlowAuth_Trf</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BankDetailsServlet</servlet-name>
+    <url-pattern>/BankDetailsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>RepaymentScheduleDownloadServlet</servlet-name>
+     <url-pattern>/RepaymentScheduleDownloadServlet</url-pattern>
+  </servlet-mapping>
+  <!--add by HIMANSHU KUMAR  -->
+	<servlet>
+	  <servlet-name>FileUploadProcessServlet</servlet-name>
+	  <servlet-class>qc.grf.controller.servlet.FileUploadProcessServlet</servlet-class>
+	  <init-param>
+	      <param-name>DataFileUploadTimeIntervalInMin</param-name>
+	      <param-value>1</param-value>
+	      </init-param>
+	      <init-param>
+	      <param-name>eotFileUploadTimeIntervalInMin</param-name>
+	      <param-value>2</param-value>
+	    </init-param>
+	  <load-on-startup>6</load-on-startup>
+	</servlet>
+	<!-- end by HIMANSHU KUMAR  -->
+<!-- 	himanshu pushAPI/miles -->
+	<servlet> 
+		<servlet-name>MilesSchedulerServlet</servlet-name> 
+ 		<servlet-class>qc.los.controller.action.servlet.MilesSchedulerServlet</servlet-class>
+ 		<load-on-startup>11</load-on-startup> 
+ 	</servlet> 
+<!--  	end himanshu -->
+	<servlet>
+		<servlet-name>MasterLoaderServlet</servlet-name>
+		<servlet-class>com.qc.starter.servlet.MasterLoaderServlet</servlet-class>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+	
+	<!--start by Hemant Kumar for bob payment api impl -->
+	<servlet>
+    <servlet-name>BOBPaymentSchedulerServlet</servlet-name>
+    <servlet-class>qc.servlet.scheduler.BOBPaymentSchedulerServlet</servlet-class>
+    <load-on-startup>12</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>BOBPaymentStatusSchedulerServlet</servlet-name>
+    <servlet-class>qc.servlet.scheduler.BOBPaymentStatusSchedulerServlet</servlet-class>
+    <load-on-startup>13</load-on-startup>
+  </servlet>
+	<!-- end by Hemant Kumar for BOB payment api impl -->
+	
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>DownloadReportServlet</servlet-name>
+    <servlet-class>qc.collection.controller.servlet.DownloadReportServlet</servlet-class>
+  </servlet>
+ <!--  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>InvoiceGenerateScheduler</servlet-name>
+    <servlet-class>qc.batchUpload.controller.action.InvoiceGenerateScheduler</servlet-class>
+  </servlet>
+<servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>InvoiceDeleteScheduler</servlet-name>
+    <servlet-class>qc.batchUpload.controller.action.InvoiceDeleteScheduler</servlet-class>
+  </servlet> -->
+ 	<servlet-mapping>
+		<servlet-name>MasterLoaderServlet</servlet-name>
+		<url-pattern>/MasterLoaderServlet</url-pattern>
+	</servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DownloadReportServlet</servlet-name>
+    <url-pattern>/downloadReportServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ReportsAutomizationSchedular</servlet-name>
+  	<url-pattern>/ReportsAutomizationSchedular</url-pattern> 
+  </servlet-mapping>
+ <!--  <servlet-mapping>
+    <servlet-name>InvoiceGenerateScheduler</servlet-name>
+    <url-pattern>/servlet/InvoiceGenerateScheduler</url-pattern>
+  </servlet-mapping>
+
+	 <servlet-mapping>
+    <servlet-name>InvoiceDeleteScheduler</servlet-name>
+    <url-pattern>/servlet/InvoiceDeleteScheduler</url-pattern>
+  </servlet-mapping> --> 
+  
+
+
+    <!-- AAA Logging Filter -->
+	<filter>
+		<filter-name>aaaLoggingFilter</filter-name>
+		<filter-class>qc.common.util.AAALoggingFilter</filter-class>
+		<init-param>
+			<param-name>exclude-urls</param-name>
+			<param-value>userAuthAction.do,/llm/login.jsp,/css/,/js/,/images/,/static/,.css,.js,.jpg,.png,.gif,.ico</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>aaaLoggingFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>aaaLoggingFilter</filter-name>
+		<url-pattern>*.sprg</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>aaaLoggingFilter</filter-name>
+		<url-pattern>*.quot</url-pattern>
+	</filter-mapping>
+
+	<filter>
+    <filter-name>userLockingFilter</filter-name>
+    <filter-class>qc.sso.util.UserLockingFilter</filter-class>
+    <init-param>
+        <param-name>avoid-urls</param-name>
+        <param-value>llm/login.jsp</param-value>
+    </init-param>
+    </filter>
+    <filter-mapping>
+     <filter-name>userLockingFilter</filter-name>
+     <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+   <filter-mapping>
+     <filter-name>userLockingFilter</filter-name>
+     <url-pattern>*.quot</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+     <filter-name>userLockingFilter</filter-name>
+     <url-pattern>*.sprg</url-pattern>
+    </filter-mapping>
+  
+
+
+  <filter-mapping>
+    <filter-name>Compress</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>  
+  <filter-mapping>
+    <filter-name>Compress</filter-name>
+    <url-pattern>*.js</url-pattern>
+  </filter-mapping>  
+  <filter-mapping>
+    <filter-name>Compress</filter-name>
+    <url-pattern>*.css</url-pattern>
+    </filter-mapping>  
+  
+  
+	<listener>
+	      <listener-class>
+	            qc.sso.util.SessionListener
+	      </listener-class>
+	</listener>
+
+	<welcome-file-list>
+		<!-- <welcome-file>index.jsp</welcome-file> -->
+		 <welcome-file>/llm/login.jsp</welcome-file>
+	</welcome-file-list>
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/500error.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404error.jsp</location>
+	</error-page>
+</web-app>
