@@ -29,6 +29,7 @@
    1.0.0.20     Viplou Dhali     07-Jul-2022     Validation on DueType
    1.0.0.21		Priyanka Soni	 08-Nov-2022	 CR:- User Logout on EOD
    1.0.0.22		Hemant Kumar	 30-Apr-2025	 Bug 147435: System is allowing user to click on invoice search multiple times which is impacting the system performance
+   1.0.0.23		Sanchi Agarwal	 07-Oct-2026	 Batch upload buttons disabled based on BATCH_UPLOAD_ENABLE_FLAG when in Print mode
  **********************************************************************************************************************************
 -->*/
 var app = angular.module('invoiceDetailsApp', []);
@@ -507,7 +508,8 @@ app.controller('invoiceDetailsCtrl', function($scope, $http,$filter, $window,$ro
 								if($scope.batchId!="" && $scope.batchId!=undefined){
 									document.getElementById("batchSummary").style.display='block';
 									document.getElementById("generate").disabled=false;
-			  						$scope.setBatchButtonsState(true);
+			  						//document.getElementById("cancelBatch").disabled=false; // 1.0.0.23 commented - handled by setBatchButtonsState
+			  						$scope.setBatchButtonsState(true); // 1.0.0.23
 								}
 								// 1.0.0.5 end
 								
@@ -515,7 +517,8 @@ app.controller('invoiceDetailsCtrl', function($scope, $http,$filter, $window,$ro
 									$scope.shownoRecordFoundDiv1=true;
 									}
 								if(onloadFlag=="Y"){
-			  						$scope.setBatchButtonsState(true);
+			  						//document.getElementById("addToBatch").disabled=false; // 1.0.0.23 commented - handled by setBatchButtonsState
+			  						$scope.setBatchButtonsState(true); // 1.0.0.23
 			  					}onloadFlag="Y";
 			  					if($scope.invoiceList!=""){
 			  					$scope.selectAllCheckBoxSelected();
@@ -920,19 +923,22 @@ app.controller('invoiceDetailsCtrl', function($scope, $http,$filter, $window,$ro
 													}
 													if($scope.invoiceList!=""){
 														document.getElementById("generate").disabled=false;
-								  						$scope.setBatchButtonsState(true);
+								  						//document.getElementById("cancelBatch").disabled=false; // 1.0.0.23 commented - handled by setBatchButtonsState
+								  						$scope.setBatchButtonsState(true); // 1.0.0.23
 													}
 													//1.0.0.4 start
 													if($scope.invoiceList=="" || $scope.invoiceList== undefined){
 														document.getElementById("generate").disabled=true;
-								  						$scope.setBatchButtonsState(false);
+								  						//document.getElementById("cancelBatch").disabled=true; // 1.0.0.23 commented - handled by setBatchButtonsState
+								  						$scope.setBatchButtonsState(false); // 1.0.0.23
 													}
 													// 1.0.0.4 end
 													$scope.getBatchSummay($scope.batchId);
 													
 													if($scope.batchNO!=""){
 													document.getElementById("batchSummary").style.display='block';
-													$scope.setBatchButtonsState(true);
+													//$scope.isaddToBatchDisabled=false; // 1.0.0.23 commented - handled by setBatchButtonsState
+													$scope.setBatchButtonsState(true); // 1.0.0.23
 								  					onloadFlag="Y";
 							  						
 													}
@@ -1109,9 +1115,11 @@ app.controller('invoiceDetailsCtrl', function($scope, $http,$filter, $window,$ro
 		};				
 		//1.0.0.18 End			
 				
-		// Batch upload button state - enabled only when print is enabled
+		// Batch upload button state - enabled only when print is enabled // 1.0.0.23
 		$scope.setBatchButtonsState = function(enableButtons) {
-			var disabled = !enableButtons || (batchUploadEnableFlag != 'Y');
+			var isPrintMode = ($scope.searchData.modeOfOperation == 'P');
+			var disabled = !enableButtons || (isPrintMode && batchUploadEnableFlag != 'Y');
+			$scope.isaddToBatchDisabled = disabled;
 			document.getElementById("addToBatch").disabled = disabled;
 			document.getElementById("cancelBatch").disabled = disabled;
 		};
