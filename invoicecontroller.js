@@ -508,7 +508,7 @@ app.controller('invoiceDetailsCtrl', function($scope, $http,$filter, $window,$ro
 								if($scope.batchId!="" && $scope.batchId!=undefined){
 									document.getElementById("batchSummary").style.display='block';
 									document.getElementById("generate").disabled=false;
-			  						//document.getElementById("cancelBatch").disabled=false; // 1.0.0.23 commented - handled by setBatchButtonsState
+			  						document.getElementById("cancelBatch").disabled=false;
 			  						$scope.setBatchButtonsState(true); // 1.0.0.23
 								}
 								// 1.0.0.5 end
@@ -517,7 +517,7 @@ app.controller('invoiceDetailsCtrl', function($scope, $http,$filter, $window,$ro
 									$scope.shownoRecordFoundDiv1=true;
 									}
 								if(onloadFlag=="Y"){
-			  						//document.getElementById("addToBatch").disabled=false; // 1.0.0.23 commented - handled by setBatchButtonsState
+			  						document.getElementById("addToBatch").disabled=false;
 			  						$scope.setBatchButtonsState(true); // 1.0.0.23
 			  					}onloadFlag="Y";
 			  					if($scope.invoiceList!=""){
@@ -923,13 +923,13 @@ app.controller('invoiceDetailsCtrl', function($scope, $http,$filter, $window,$ro
 													}
 													if($scope.invoiceList!=""){
 														document.getElementById("generate").disabled=false;
-								  						//document.getElementById("cancelBatch").disabled=false; // 1.0.0.23 commented - handled by setBatchButtonsState
+								  						document.getElementById("cancelBatch").disabled=false;
 								  						$scope.setBatchButtonsState(true); // 1.0.0.23
 													}
 													//1.0.0.4 start
 													if($scope.invoiceList=="" || $scope.invoiceList== undefined){
 														document.getElementById("generate").disabled=true;
-								  						//document.getElementById("cancelBatch").disabled=true; // 1.0.0.23 commented - handled by setBatchButtonsState
+								  						document.getElementById("cancelBatch").disabled=true;
 								  						$scope.setBatchButtonsState(false); // 1.0.0.23
 													}
 													// 1.0.0.4 end
@@ -937,7 +937,7 @@ app.controller('invoiceDetailsCtrl', function($scope, $http,$filter, $window,$ro
 													
 													if($scope.batchNO!=""){
 													document.getElementById("batchSummary").style.display='block';
-													//$scope.isaddToBatchDisabled=false; // 1.0.0.23 commented - handled by setBatchButtonsState
+													$scope.isaddToBatchDisabled=false;
 													$scope.setBatchButtonsState(true); // 1.0.0.23
 								  					onloadFlag="Y";
 							  						
@@ -1121,7 +1121,6 @@ app.controller('invoiceDetailsCtrl', function($scope, $http,$filter, $window,$ro
 			var disabled = !enableButtons || (isPrintMode && batchUploadEnableFlag != 'Y');
 			$scope.isaddToBatchDisabled = disabled;
 			document.getElementById("addToBatch").disabled = disabled;
-			document.getElementById("cancelBatch").disabled = disabled;
 		};
 		
 		$scope.addToBatch= function(){
