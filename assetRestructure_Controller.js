@@ -26,7 +26,6 @@
 +  1.0.0.18     Narottam Biswal   05-Jul-2023     validation added to select restructure(if change in lessee selected change in place of supply must be selected) 
 +  1.0.0.19     Ravi Shankar     01-Dec-2023     PC_CHANGE_IN_RSD_FLG
 +  1.0.0.20     Nalin Kumar Jena 27-Apr-2026     Tabs to be added in restructuring module
-+  1.0.0.21     Sanchi Agarwal   15-Oct-2026     Request Received from Customer/B&C validation and Agreement Signing Type changes
  ***********************************************************************************************************************************/
 var app = angular.module('assetRestructureApp', []);
 app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope) {
@@ -55,7 +54,7 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 	$scope.AGREEMENT_SIGNING_TYPE_MASTER = [];
 	$scope.AGREEMENT_SIGNING_TYPE_MASTER_ORIGINAL = [];
 	$scope.DOCUMENTS_REQUIRED_MASTER = [];
-	$scope.disableDocumentsRequired = false;
+	$scope.disableDocumentsRequired = false; // 1.0.0.21
 	// End 1.0.0.20
 
 	jsonStr = JSON.parse(mastersListStr);
@@ -155,7 +154,6 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 	$scope.DISB_BILLING_ADDRESS_NEW = true;
 	$scope.RSD_CHECKED_FLG=false;
 	$scope.DISB_SCHEME=true;//1.0.0.13
-	$scope.disableDocumentsRequired = false; // 1.0.0.21 - Flag to control Documents Required field enable/disable state
 		
 	$scope.enableDisableFields = function(){
 		// start changes for enable and disable
@@ -249,10 +247,7 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 	
 	 }
 	 
-	 // Start 1.0.0.21
-	 // Auto-select Documents Required based on matrix logic as per requirement 3.3
-	 // This function implements the matrix logic for Documents Required field behavior
-	 // based on Restructure Type and Agreement Signing Type combinations
+	 // 1.0.0.21 - Documents Required auto-fill & disable logic
 	 $scope.autoSelectDocumentsRequired = function(){
 		 var restructureType = $scope.user.RESTRUCTURE_TYPE;
 		 var agreementSigningType = $scope.user.AGREEMENT_SIGNING_TYPE;
@@ -264,52 +259,36 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 			 return;
 		 }
 		 
-		 // Get Agreement Signing Type name for comparison
-		 var agreementSigningTypeName = "";
-		 if(agreementSigningType && agreementSigningType != '0') {
-			 var signingTypeObj = $scope.AGREEMENT_SIGNING_TYPE_MASTER.find(function(item) {
-				 return item.ID == agreementSigningType;
-			 });
-			 if(signingTypeObj) {
-				 agreementSigningTypeName = signingTypeObj.NAME;
-			 }
-		 }
-		 
-		 // 1.0.0.21 - Matrix logic as per requirement 3.3
-		 // For Asset Transfer types (1000000001 or 1000000002)
 		 if(restructureType == "1000000001" || restructureType == "1000000002") {
-			 if(agreementSigningTypeName == "E-Sign") {
-				 $scope.user.DOCUMENTS_REQUIRED = 'Y'; // 1.0.0.21 - Force Yes and disable
-				 $scope.disableDocumentsRequired = true; // 1.0.0.21
-			 } else if(agreementSigningTypeName == "Manual" || agreementSigningTypeName == "E-Sign but doc awaited") {
-				 $scope.disableDocumentsRequired = false; // 1.0.0.21 - Enable with both options
-				 // Don't auto-populate, let user choose
-			 } else if(agreementSigningTypeName == "Documents Not Required") {
-				 $scope.user.DOCUMENTS_REQUIRED = 'N'; // 1.0.0.21 - Force No and disable
-				 $scope.disableDocumentsRequired = true; // 1.0.0.21
+			 if(agreementSigningType == "1000000001") {
+				 $scope.user.DOCUMENTS_REQUIRED = 'Y';
+				 $scope.disableDocumentsRequired = true;
+			 } else if(agreementSigningType == "1000000003" || agreementSigningType == "1000000002") {
+				 $scope.disableDocumentsRequired = false;
+			 } else if(agreementSigningType == "1000000004") {
+				 $scope.user.DOCUMENTS_REQUIRED = 'N';
+				 $scope.disableDocumentsRequired = true;
 			 }
 		 }
-		 // 1.0.0.21 - For Extension type (1000000003)
 		 else if(restructureType == "1000000003") {
-			 if(agreementSigningTypeName == "E-Sign") {
-				 // Check tenure for extension
-				 if(extensionPeriod == "1000000001") { // 1.0.0.21 - ≤ 12 months
-					 $scope.user.DOCUMENTS_REQUIRED = 'N'; // 1.0.0.21 - Force No and disable (special case)
-					 $scope.disableDocumentsRequired = true; // 1.0.0.21
-				 } else { // 1.0.0.21 - > 12 months
-					 $scope.user.DOCUMENTS_REQUIRED = 'Y'; // 1.0.0.21 - Force Yes and disable
-					 $scope.disableDocumentsRequired = true; // 1.0.0.21
+			 if(agreementSigningType == "1000000001") {
+				 if(extensionPeriod == "1000000001") {
+					 $scope.user.DOCUMENTS_REQUIRED = 'N';
+					 $scope.disableDocumentsRequired = true;
+				 } else {
+					 $scope.user.DOCUMENTS_REQUIRED = 'Y';
+					 $scope.disableDocumentsRequired = true;
 				 }
-			 } else if(agreementSigningTypeName == "Manual" || agreementSigningTypeName == "E-Sign but doc awaited") {
-				 $scope.disableDocumentsRequired = false; // 1.0.0.21 - Enable with both options
-				 // Don't auto-populate, let user choose
-			 } else if(agreementSigningTypeName == "Documents Not Required") {
-					$scope.user.DOCUMENTS_REQUIRED = 'N'; // 1.0.0.21 - Force No and disable
-					$scope.disableDocumentsRequired = true; // 1.0.0.21
+			 } else if(agreementSigningType == "1000000003" || agreementSigningType == "1000000002") {
+				 $scope.disableDocumentsRequired = false;
+			 } else if(agreementSigningType == "1000000004") {
+				 $scope.user.DOCUMENTS_REQUIRED = 'N';
+				 $scope.disableDocumentsRequired = true;
 			 }
 		 }
+
 	 }
-	 // End 1.0.0.21
+	 
 
 	 $scope.agreementSigningTypeSelectOnExtensionPeriod = function () {
 
@@ -715,7 +694,6 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 		if($scope.user.RESTRUCTURE_TYPE!="1000000003"){
 			$scope.user.EXTENSION_PERIOD="0";
 		}
-		$scope.disableDocumentsRequired = false;
 		// 1.0.0.20
 		$scope.enableDisableFields();
 	}
@@ -769,88 +747,47 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 	};
 	$scope.checkFormData=function(){
 		
-		// Start 1.0.0.21
+		// Start 1.0.0.20
 		// New Marketing Restructuring Fields Validation - Applicable for all restructure types except RSD Change
-		// Requirements 3.1, 3.2: Request Received fields mandatory validation
-		// Requirement 3.3: Agreement Signing Type and Documents Required field validation
 		if($scope.user.USER_TYPE != null && $scope.user.USER_TYPE == "MKT" ){
 			if($scope.user.RSD_FLG != true) {
 
-			// 1.0.0.21 - Request received from Customer validation
-			// Removed SEZ checkbox condition as per requirement 3.1.1
-			// New logic as per requirement 3.1.2 and 3.1.3
-			var isMandatory = false;
-			
-			// 1.0.0.21 - Check for Asset Transfer types (1000000001 or 1000000002)
+			// 1.0.0.21 - Requirement 3.1
+			var reqCustMandatory = false;
 			if($scope.user.RESTRUCTURE_TYPE == "1000000001" || $scope.user.RESTRUCTURE_TYPE == "1000000002") {
-				// 1.0.0.21 - For Asset Transfer, mandatory only when reason is GST Change/Location Change or Place of Supply
-				var restructuringReasonName = "";
-				if($scope.user.RESTRUCTURE_REASON != null && $scope.user.RESTRUCTURE_REASON != "0") {
-					var reasonObj = $scope.RESTRUCTURE_REASON.find(function(item) {
-						return item.ID == $scope.user.RESTRUCTURE_REASON;
-					});
-					if(reasonObj) {
-						restructuringReasonName = reasonObj.NAME;
-					}
+				var reasonObj = $scope.RESTRUCTURE_REASON.find(function(item) { return item.ID == $scope.user.RESTRUCTURE_REASON; });
+				var reasonName = reasonObj ? reasonObj.NAME : "";
+				if(reasonName == "GST CHANGE/LOCATION CHANGE" || reasonName == "PLACE OF SUPPLY") {
+					reqCustMandatory = true;
 				}
-				
-				if(restructuringReasonName == "GST CHANGE/LOCATION CHANGE" || restructuringReasonName == "PLACE OF SUPPLY") {
-					isMandatory = true;
-				}
+			} else if($scope.user.RESTRUCTURE_TYPE == "1000000003") {
+				reqCustMandatory = true;
 			}
-			// 1.0.0.21 - Check for Extension type (1000000003)
-			else if($scope.user.RESTRUCTURE_TYPE == "1000000003") {
-				// 1.0.0.21 - For Extension, always mandatory as per requirement 3.1.3
-				isMandatory = true;
+			if(reqCustMandatory && ($scope.user.REQ_RECEIVED_FROM_CUST == null || $scope.user.REQ_RECEIVED_FROM_CUST == "")){
+				tempData.errorMessages = tempData.errorMessages +"\n"+"REQUEST RECEIVED FROM CUSTOMER MUST BE SPECIFIED.";
 			}
-			
-			if(isMandatory) {
-				if($scope.user.REQ_RECEIVED_FROM_CUST == null || $scope.user.REQ_RECEIVED_FROM_CUST == ""){
-					tempData.errorMessages = tempData.errorMessages +"\n"+"REQUEST RECEIVED FROM CUSTOMER MUST BE SPECIFIED.";
-				}
-			}
-			// 1.0.0.21 - Request received from B&C validation
-			// New logic as per requirement 3.2
-			var isBcMandatory = false;
-			
-			// 1.0.0.21 - Check for Asset Transfer types (1000000001 or 1000000002)
+			// 1.0.0.21 - Requirement 3.2
+			var reqBcMandatory = false;
 			if($scope.user.RESTRUCTURE_TYPE == "1000000001" || $scope.user.RESTRUCTURE_TYPE == "1000000002") {
-				// 1.0.0.21 - For Asset Transfer, mandatory when reason is GST Change/Location Change or Place of Supply or SEZ
-				var restructuringReasonName = "";
-				if($scope.user.RESTRUCTURE_REASON != null && $scope.user.RESTRUCTURE_REASON != "0") {
-					var reasonObj = $scope.RESTRUCTURE_REASON.find(function(item) {
-						return item.ID == $scope.user.RESTRUCTURE_REASON;
-					});
-					if(reasonObj) {
-						restructuringReasonName = reasonObj.NAME;
-					}
-				}
-				
-				if(restructuringReasonName == "GST CHANGE/LOCATION CHANGE" || restructuringReasonName == "PLACE OF SUPPLY" || restructuringReasonName == "SEZ") {
-					isBcMandatory = true;
+				var reasonObj = $scope.RESTRUCTURE_REASON.find(function(item) { return item.ID == $scope.user.RESTRUCTURE_REASON; });
+				var reasonName = reasonObj ? reasonObj.NAME : "";
+				if(reasonName == "GST CHANGE/LOCATION CHANGE" || reasonName == "PLACE OF SUPPLY" || reasonName == "SEZ") {
+					reqBcMandatory = true;
 				}
 			}
-			// 1.0.0.21 - Check for Extension type (1000000003)
-			else if($scope.user.RESTRUCTURE_TYPE == "1000000003") {
-				// 1.0.0.21 - For Extension, non-mandatory as per requirement 3.2.2
-				isBcMandatory = false;
-			}
-			
-			if(isBcMandatory) {
-				if($scope.user.REQ_RECEIVED_FROM_BC == null || $scope.user.REQ_RECEIVED_FROM_BC == ""){
-					tempData.errorMessages = tempData.errorMessages +"\n"+"REQUEST RECEIVED FROM B&C MUST BE SPECIFIED.";
-				}
+			if(reqBcMandatory && ($scope.user.REQ_RECEIVED_FROM_BC == null || $scope.user.REQ_RECEIVED_FROM_BC == "")){
+				tempData.errorMessages = tempData.errorMessages +"\n"+"REQUEST RECEIVED FROM B&C MUST BE SPECIFIED.";
 			}
 
-			// 1.0.0.21 - Agreement Signing Type - Mandatory for all except RSD Change
+			// Agreement Signing Type - Mandatory for all except RSD Change
 			if($scope.user.AGREEMENT_SIGNING_TYPE == null || $scope.user.AGREEMENT_SIGNING_TYPE == "0"){
 				tempData.errorMessages = tempData.errorMessages +"\n"+"AGREEMENT SIGNING TYPE MUST BE SPECIFIED.";
 			}
-			// 1.0.0.21 - Documents Required - Mandatory for all except RSD Change
+			// Documents Required - Mandatory for all except RSD Change
 			if($scope.user.DOCUMENTS_REQUIRED == null || $scope.user.DOCUMENTS_REQUIRED == "0" || $scope.user.DOCUMENTS_REQUIRED == ""){
 				tempData.errorMessages = tempData.errorMessages +"\n"+"DOCUMENTS REQUIRED MUST BE SPECIFIED.";
 			}
-			// 1.0.0.21 - Extension Period - Mandatory for Extension type
+			// Extension Period - Mandatory for Extension type
 			if($scope.user.RESTRUCTURE_TYPE == "1000000003"){
 				if($scope.user.EXTENSION_PERIOD == null || $scope.user.EXTENSION_PERIOD == "0"){
 					tempData.errorMessages = tempData.errorMessages +"\n"+"EXTENSION PERIOD MUST BE SPECIFIED.";
@@ -859,7 +796,7 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 
 		  }
 		}
-		// End 1.0.0.21
+		// End 1.0.0.20
 		
 		if($scope.user.RESTRUCTURE_TYPE == "1000000001"){
 			
