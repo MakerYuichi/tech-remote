@@ -9,7 +9,7 @@
   		1.0.0.7				11-Mar-2024			Hemant Kumar			Bug 130541 - Getting issue at the time of Restructuring: Principal outstanding or balance tenor is not correct
  		1.0.0.8				24-Jan-2025			Nihkil Gupta			143033 Advance Search button is not appearing on Asset screen
  		1.0.0.9             27-Apr-2026         Nalin Kumar Jena      Tabs to be added in restructuring module
- 		1.0.0.10			15-Oct-2026			Sanchi Agarwal			Request Received from Customer/B&C validation and Agreement Signing Type matrix logic
+ 		1.0.0.10            15-Oct-2026         Sanchi Agarwal      Conditional mandatory field validation (Req 3.1, 3.2) & matrix logic for Documents Required (Req 3.3)
   -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"    pageEncoding="ISO-8859-1" isELIgnored="false" %>
@@ -193,7 +193,8 @@
 						
 						<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6"><bean:message bundle="quotationApplicationResources" key="qt.asset.documentsRequired"/></div>
 						<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6">
-							<select class = 'text_header_cost' id="DOCUMENTS_REQUIRED" ng-model="user.DOCUMENTS_REQUIRED" ng-options="value.ID as value.NAME for value in DOCUMENTS_REQUIRED_MASTER" style="background-color:#ebf3ff;" ng-disabled="disableDocumentsRequired || user.RSD_FLG"> <!-- 1.0.0.10: Changed from disabled="disabled" to conditional ng-disabled -->
+							<!-- 1.0.0.10 -->
+							<select class = 'text_header_cost' id="DOCUMENTS_REQUIRED" ng-model="user.DOCUMENTS_REQUIRED" ng-options="value.ID as value.NAME for value in DOCUMENTS_REQUIRED_MASTER" style="background-color:#ebf3ff;" ng-disabled="disableDocumentsRequired || user.RSD_FLG">
 							</select>
 						</div>
 
