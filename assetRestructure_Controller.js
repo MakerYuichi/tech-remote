@@ -289,6 +289,49 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 
 	 }
 	 
+	 /*
+	 // 1.0.0.20 - COMMENTED OUT: Replaced with 1.0.0.21 logic
+	 // Auto-select Documents Required based on PC_DOC_REQIRED_DTLS configuration
+	 $scope.autoSelectDocumentsRequired = function(){
+		 var restructureType = $scope.user.RESTRUCTURE_TYPE;
+		 var agreementSigningType = $scope.user.AGREEMENT_SIGNING_TYPE;
+		 var extensionPeriod = $scope.user.EXTENSION_PERIOD;
+		 
+		 if(!restructureType || !agreementSigningType || agreementSigningType == '0' || $scope.user.USER_TYPE !="MKT"){
+			 $scope.user.DOCUMENTS_REQUIRED = '0';
+			 return;
+		 }
+		 
+		 // Find matching record in PC_DOC_REQIRED_DTLS
+		 var matchedRecord = null;
+		 
+		 for(var i = 0; i < $scope.PC_DOC_REQIRED_DTLS.length; i++){
+			 var record = $scope.PC_DOC_REQIRED_DTLS[i];
+			 
+			 // Check if RESTRUCTURE_TYPE_ID matches
+			 if(record.RESTRUCTURE_TYPE_ID == restructureType){
+				 // Check if AGREEMENT_SIGNING_TYPE matches
+				 if(record.AGREEMENT_SIGNING_TYPE == agreementSigningType){
+					 // For Extension type (1000000003), also check EXTENSION_PERIOD_ID
+					 if(restructureType == '1000000003'){
+						 if(record.EXTENSION_PERIOD_ID == extensionPeriod){
+							 matchedRecord = record;
+							 break;
+						 }
+					 } else {
+						 // For Restructure (1000000001) and Transfer (1000000002), no extension period check needed
+						 matchedRecord = record;
+						 break;
+					 }
+				 }
+			 }
+		 }
+		 
+		 $scope.user.DOCUMENTS_REQUIRED = (matchedRecord && matchedRecord.DOC_REQUIRED) ? matchedRecord.DOC_REQUIRED : '0';
+
+	 }
+	 */
+	 
 
 	 $scope.agreementSigningTypeSelectOnExtensionPeriod = function () {
 
@@ -778,6 +821,23 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 			if(reqBcMandatory && ($scope.user.REQ_RECEIVED_FROM_BC == null || $scope.user.REQ_RECEIVED_FROM_BC == "")){
 				tempData.errorMessages = tempData.errorMessages +"\n"+"REQUEST RECEIVED FROM B&C MUST BE SPECIFIED.";
 			}
+			
+			/*
+			// 1.0.0.20 - COMMENTED OUT: Replaced with 1.0.0.21 logic
+			// Request received from Customer -  non-mandatory when SEZ Change is checked
+			if($scope.user.RESTRUCTURE_REASON != null &&  $scope.user.RESTRUCTURE_REASON == "1000000015"){
+				
+			}else{
+				if($scope.user.REQ_RECEIVED_FROM_CUST == null || $scope.user.REQ_RECEIVED_FROM_CUST == ""){
+						tempData.errorMessages = tempData.errorMessages +"\n"+"REQUEST RECEIVED FROM CUSTOMER MUST BE SPECIFIED.";
+				}
+					
+			}
+			// Request received from B&C - Mandatory for all except RSD Change
+			if($scope.user.REQ_RECEIVED_FROM_BC == null || $scope.user.REQ_RECEIVED_FROM_BC == ""){
+				tempData.errorMessages = tempData.errorMessages +"\n"+"REQUEST RECEIVED FROM B&C MUST BE SPECIFIED.";
+			}
+			*/
 
 			// Agreement Signing Type - Mandatory for all except RSD Change
 			if($scope.user.AGREEMENT_SIGNING_TYPE == null || $scope.user.AGREEMENT_SIGNING_TYPE == "0"){
