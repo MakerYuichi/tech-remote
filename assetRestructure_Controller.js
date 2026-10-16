@@ -253,6 +253,9 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 		 var agreementSigningType = $scope.user.AGREEMENT_SIGNING_TYPE;
 		 var extensionPeriod = $scope.user.EXTENSION_PERIOD;
 		 
+		 // 1.0.0.21 - Global reset: Clear previous value before recalculating
+		 $scope.user.DOCUMENTS_REQUIRED = '';
+		 
 		 if(!restructureType || !agreementSigningType || agreementSigningType == '0' || $scope.user.USER_TYPE !="MKT"){
 			 $scope.user.DOCUMENTS_REQUIRED = '0';
 			 $scope.disableDocumentsRequired = false;
@@ -349,7 +352,19 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 		        return;
 		    }
 		    $scope.user.AGREEMENT_SIGNING_TYPE = '0';
-		    // If EXTENSION_PERIOD = 1000000002
+		    
+		    // 1.0.0.21 - Removed restrictive filter for Extension > 12 months
+		    // Now allow ALL agreement types for any extension period (per Requirement 3.3)
+		    // Restore original dropdown with all options
+		    $scope.AGREEMENT_SIGNING_TYPE_MASTER =
+		        angular.copy($scope.AGREEMENT_SIGNING_TYPE_MASTER_ORIGINAL);
+
+		    // Reset selection
+		    $scope.user.AGREEMENT_SIGNING_TYPE = '0';
+		    
+		    /*
+		    // 1.0.0.20 - COMMENTED OUT: Pre-existing filter that restricted Extension > 12 months to E-Sign only
+		    // This contradicted Requirement 3.3 which allows Manual for any extension period
 		    if ($scope.user.EXTENSION_PERIOD == '1000000002') {
 
 		        $scope.AGREEMENT_SIGNING_TYPE_MASTER =
@@ -374,6 +389,7 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 		        // Reset selection
 		        $scope.user.AGREEMENT_SIGNING_TYPE = '0';
 		    }
+		    */
 		};
 		
    // End 1.0.0.20
