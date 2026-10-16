@@ -26,7 +26,7 @@
 +  1.0.0.18     Narottam Biswal   05-Jul-2023     validation added to select restructure(if change in lessee selected change in place of supply must be selected) 
 +  1.0.0.19     Ravi Shankar     01-Dec-2023     PC_CHANGE_IN_RSD_FLG
 +  1.0.0.20     Nalin Kumar Jena 27-Apr-2026     Tabs to be added in restructuring module
-+  1.0.0.21     Sanchi Agarwal  15-Oct-2026     Conditional mandatory field validation (Req 3.1, 3.2) & matrix logic for Documents Required (Req 3.3)
++  1.0.0.21     Sanchia Agarwal  15-Oct-2026     Conditional mandatory field validation (Req 3.1, 3.2) & matrix logic for Documents Required (Req 3.3)
  ***********************************************************************************************************************************/
 var app = angular.module('assetRestructureApp', []);
 app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope) {
@@ -248,13 +248,12 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 	
 	 }
 	 
-	 // 1.0.0.21 - Documents Required auto-fill & disable logic
+	 // 1.0.0.21 start
 	 $scope.autoSelectDocumentsRequired = function(){
 		 var restructureType = $scope.user.RESTRUCTURE_TYPE;
 		 var agreementSigningType = $scope.user.AGREEMENT_SIGNING_TYPE;
 		 var extensionPeriod = $scope.user.EXTENSION_PERIOD;
 		 
-		 // 1.0.0.21 - Global reset: Clear previous value before recalculating
 		 $scope.user.DOCUMENTS_REQUIRED = '';
 		 
 		 if(!restructureType || !agreementSigningType || agreementSigningType == '0' || $scope.user.USER_TYPE !="MKT"){
@@ -294,7 +293,7 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 	 }
 	 
 	 /*
-	 // 1.0.0.20 - COMMENTED OUT: Replaced with 1.0.0.21 logic
+	 // 1.0.0.20 start
 	 // Auto-select Documents Required based on PC_DOC_REQIRED_DTLS configuration
 	 $scope.autoSelectDocumentsRequired = function(){
 		 var restructureType = $scope.user.RESTRUCTURE_TYPE;
@@ -334,12 +333,14 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 		 $scope.user.DOCUMENTS_REQUIRED = (matchedRecord && matchedRecord.DOC_REQUIRED) ? matchedRecord.DOC_REQUIRED : '0';
 
 	 }
+	 // 1.0.0.21 end
+	 // 1.0.0.20 end
 	 */
 	 
 
+	 // 1.0.0.21 start
 	 $scope.agreementSigningTypeSelectOnExtensionPeriod = function () {
 
-		    // Null / Undefined check
 		    if ($scope.user == null || 
 		        $scope.user == undefined || 
 		        $scope.user.EXTENSION_PERIOD == null || 
@@ -349,23 +350,19 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 		        $scope.AGREEMENT_SIGNING_TYPE_MASTER = 
 		            angular.copy($scope.AGREEMENT_SIGNING_TYPE_MASTER_ORIGINAL);
 
-		        //$scope.user.AGREEMENT_SIGNING_TYPE = '0';
 		        return;
 		    }
 		    $scope.user.AGREEMENT_SIGNING_TYPE = '0';
 		    
-		    // 1.0.0.21 - Removed restrictive filter for Extension > 12 months
-		    // Now allow ALL agreement types for any extension period (per Requirement 3.3)
-		    // Restore original dropdown with all options
 		    $scope.AGREEMENT_SIGNING_TYPE_MASTER =
 		        angular.copy($scope.AGREEMENT_SIGNING_TYPE_MASTER_ORIGINAL);
 
-		    // Reset selection
 		    $scope.user.AGREEMENT_SIGNING_TYPE = '0';
+	 }
+	 // 1.0.0.21 end
 		    
 		    /*
-		    // 1.0.0.20 - COMMENTED OUT: Pre-existing filter that restricted Extension > 12 months to E-Sign only
-		    // This contradicted Requirement 3.3 which allows Manual for any extension period
+		    // 1.0.0.20
 		    if ($scope.user.EXTENSION_PERIOD == '1000000002') {
 
 		        $scope.AGREEMENT_SIGNING_TYPE_MASTER =
@@ -378,16 +375,11 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 		                       (item.ID == '0' || item.ID == '1000000001');
 		            });
 
-		        // Auto select
-		        //$scope.user.AGREEMENT_SIGNING_TYPE = '1000000001';
-
 		    } else {
 
-		        // Restore original dropdown
 		        $scope.AGREEMENT_SIGNING_TYPE_MASTER =
 		            angular.copy($scope.AGREEMENT_SIGNING_TYPE_MASTER_ORIGINAL);
 
-		        // Reset selection
 		        $scope.user.AGREEMENT_SIGNING_TYPE = '0';
 		    }
 		    */
@@ -812,7 +804,7 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 		if($scope.user.USER_TYPE != null && $scope.user.USER_TYPE == "MKT" ){
 			if($scope.user.RSD_FLG != true) {
 
-			// 1.0.0.21 - Requirement 3.1
+			// 1.0.0.21 start
 			var reqCustMandatory = false;
 			if($scope.user.RESTRUCTURE_TYPE == "1000000001" || $scope.user.RESTRUCTURE_TYPE == "1000000002") {
 				var reasonObj = $scope.RESTRUCTURE_REASON.find(function(item) { return item.ID == $scope.user.RESTRUCTURE_REASON; });
@@ -826,7 +818,6 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 			if(reqCustMandatory && ($scope.user.REQ_RECEIVED_FROM_CUST == null || $scope.user.REQ_RECEIVED_FROM_CUST == "")){
 				tempData.errorMessages = tempData.errorMessages +"\n"+"REQUEST RECEIVED FROM CUSTOMER MUST BE SPECIFIED.";
 			}
-			// 1.0.0.21 - Requirement 3.2
 			var reqBcMandatory = false;
 			if($scope.user.RESTRUCTURE_TYPE == "1000000001" || $scope.user.RESTRUCTURE_TYPE == "1000000002") {
 				var reasonObj = $scope.RESTRUCTURE_REASON.find(function(item) { return item.ID == $scope.user.RESTRUCTURE_REASON; });
@@ -838,6 +829,7 @@ app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope)
 			if(reqBcMandatory && ($scope.user.REQ_RECEIVED_FROM_BC == null || $scope.user.REQ_RECEIVED_FROM_BC == "")){
 				tempData.errorMessages = tempData.errorMessages +"\n"+"REQUEST RECEIVED FROM B&C MUST BE SPECIFIED.";
 			}
+			// 1.0.0.21 end
 			
 			/*
 			// 1.0.0.20 - COMMENTED OUT: Replaced with 1.0.0.21 logic
