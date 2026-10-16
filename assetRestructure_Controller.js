@@ -26,6 +26,7 @@
 +  1.0.0.18     Narottam Biswal   05-Jul-2023     validation added to select restructure(if change in lessee selected change in place of supply must be selected) 
 +  1.0.0.19     Ravi Shankar     01-Dec-2023     PC_CHANGE_IN_RSD_FLG
 +  1.0.0.20     Nalin Kumar Jena 27-Apr-2026     Tabs to be added in restructuring module
++  1.0.0.21     Sanchi Agarwal  15-Oct-2026     Conditional mandatory field validation (Req 3.1, 3.2) & matrix logic for Documents Required (Req 3.3)
  ***********************************************************************************************************************************/
 var app = angular.module('assetRestructureApp', []);
 app.controller('assetRestructureCtrl', function($scope,$http,$window,$rootScope) {
