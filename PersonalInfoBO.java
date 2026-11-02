@@ -167,7 +167,7 @@ public class PersonalInfoBO
 		String messageAndStatus = null;
 		  if(dbConnectionMap.get("DB_SERVER").toString().equals("ORACLE"))
 		  {
-			    procName="{call Pkg_Los_Trn_Applicant_Master.GETSINGLEAPPLICANTMASTER(?,?,?,?,?,?,?,?,?,?,?)}"; //1.0.0.17//1.0.0.23
+			    procName="{call Pkg_Los_Trn_Applicant_Master.GETSINGLEAPPLICANTMASTER(?,?,?,?,?,?,?,?,?,?,?,?)}"; //1.0.0.17//1.0.0.23//1.0.0.24
 			 	arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,""+ProspectId));
 			 	arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,""+ApplicantType));
 				arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,""+applicantId));
@@ -179,6 +179,7 @@ public class PersonalInfoBO
 				arrParameter.add(new ParameterDTO(++parameterCount,"OUT",oracle.jdbc.OracleTypes.CURSOR,null));//1.0.0.17
 				arrParameter.add(new ParameterDTO(++parameterCount,"OUT",oracle.jdbc.OracleTypes.CURSOR,null));//1.0.0.19 Lei 
 				arrParameter.add(new ParameterDTO(++parameterCount,"OUT",oracle.jdbc.OracleTypes.CURSOR,null));//1.0.0.23
+				arrParameter.add(new ParameterDTO(++parameterCount,"OUT",oracle.jdbc.OracleTypes.CLOB,null));//1.0.0.24 PC_PAYMENT_TERMS
 		 }
 		  else if(dbConnectionMap.get("DB_SERVER").toString().equals("MSSQLSERVER"))
 		  {
@@ -205,6 +206,10 @@ public class PersonalInfoBO
 			  parameterDto4 = (ParameterDTO)arrParameter.get(8);
 			  parameterDto5= (ParameterDTO)arrParameter.get(9); //1.0.0.19
 			  parameterDto6= (ParameterDTO)arrParameter.get(10); //1.0.0.23
+			  ParameterDTO parameterDto7= (ParameterDTO)arrParameter.get(11); //1.0.0.24 PC_PAYMENT_TERMS
+			  if(parameterDto7 != null && parameterDto7.getParameterValue() != null) { //1.0.0.24
+				  personalInfoDTO.setPaymentTerms(parameterDto7.getParameterValue().toString()); //1.0.0.24
+			  } //1.0.0.24
 			ArrayList list=(ArrayList)parameterDto.getParameterValue();
 			
 			if(list != null && list.size()>0){
@@ -661,12 +666,6 @@ public class PersonalInfoBO
 						personalInfoDTO.setGstRegistrationStatus(resultSetMap.get("GST_REGISTERED").toString());
 					}
 					//1.0.0.21
-					//1.0.0.24
-					if(resultSetMap.get("PAYMENT_TERMS") != null)
-					{
-						personalInfoDTO.setPaymentTerms(resultSetMap.get("PAYMENT_TERMS").toString());
-					}
-					//1.0.0.24
 					
 					if(resultSetMap.get("LOB") != null)
 					{
@@ -1246,7 +1245,7 @@ public class PersonalInfoBO
 				  { 
 					    procName="{call Pkg_Los_Trn_Applicant_Master.PR_APP_MASTER_TRANSACTION(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, "
 					    		+ "?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,? ,?"
-					    		+ ",?,?,?,?, ?,?,?,?, ?,? ,? ,?,?,?,?, ?,?,?,?,?,?,?)}"; //1.0.0.3  //1.0.0.6added//1.0.0.9 //1.0.0.10 //1.0.0.11//1.0.0.12//1.0.0.13 //1.0.0.16 //1.0.0.16//1.0.0.18//1.0.0.19//1.0.0.22
+					    		+ ",?,?,?,?, ?,?,?,?, ?,? ,? ,?,?,?,?, ?,?,?,?,?,?,?)}"; //1.0.0.3  //1.0.0.6added//1.0.0.9 //1.0.0.10 //1.0.0.11//1.0.0.12//1.0.0.13 //1.0.0.16 //1.0.0.16//1.0.0.18//1.0.0.19//1.0.0.24
 					 	arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,personalInfoForm.getApplicantID()));
 					 	arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,personalInfoForm.getApplicantCode()));
 						arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,personalInfoForm.getApplicantType()));
@@ -1705,7 +1704,7 @@ public class PersonalInfoBO
 		
 		  if(dbConnectionMap.get("DB_SERVER").toString().equals("ORACLE"))
 		  {
-			    procName="{call Pkg_LMS_APPLICANT_MASTER.GETSINGLEAPPLICANTMASTER(?,?,?,?,? ,?,?,?,?,?,?,?)}";
+			    procName="{call Pkg_LMS_APPLICANT_MASTER.GETSINGLEAPPLICANTMASTER(?,?,?,?,? ,?,?,?,?,?,?,?,?)}"; //1.0.0.24
 			 	arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,""+ProspectId));
 			 	arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,""+ApplicantType));
 				arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,""+applicantId));
@@ -1718,6 +1717,7 @@ public class PersonalInfoBO
 				arrParameter.add(new ParameterDTO(++parameterCount,"OUT",oracle.jdbc.OracleTypes.CURSOR,null));
 				arrParameter.add(new ParameterDTO(++parameterCount,"OUT",oracle.jdbc.OracleTypes.CURSOR,null)); //1.0.0.19
 				arrParameter.add(new ParameterDTO(++parameterCount,"OUT",oracle.jdbc.OracleTypes.CURSOR,null));//1.0.0.23
+				arrParameter.add(new ParameterDTO(++parameterCount,"OUT",oracle.jdbc.OracleTypes.CLOB,null));//1.0.0.24 PC_PAYMENT_TERMS
 		  }
 		  else if(dbConnectionMap.get("DB_SERVER").toString().equals("MSSQLSERVER"))
 		  {
@@ -1751,6 +1751,10 @@ public class PersonalInfoBO
 			  parameterDto2 = (ParameterDTO)arrParameter.get(9);
 			  parameterDto3= (ParameterDTO)arrParameter.get(10); //1.0.0.19
 			  parameterDto6= (ParameterDTO)arrParameter.get(11); //1.0.0.23
+			  ParameterDTO parameterDto7Lms= (ParameterDTO)arrParameter.get(12); //1.0.0.24 PC_PAYMENT_TERMS
+			  if(parameterDto7Lms != null && parameterDto7Lms.getParameterValue() != null) { //1.0.0.24
+				  personalInfoDTO.setPaymentTerms(parameterDto7Lms.getParameterValue().toString()); //1.0.0.24
+			  } //1.0.0.24
 			  Iterator itr = list.iterator();
 			  Map resultSetMap = null;
 			  if(itr!=null)
@@ -2092,12 +2096,6 @@ public class PersonalInfoBO
 							personalInfoDTO.setGstRegistrationStatus(resultSetMap.get("GST_REGISTERED").toString());
 						}
 						//1.0.0.21
-						//1.0.0.24
-						if(resultSetMap.get("PAYMENT_TERMS") != null)
-						{
-							personalInfoDTO.setPaymentTerms(resultSetMap.get("PAYMENT_TERMS").toString());
-						}
-						//1.0.0.24
 						
 						
 						if(resultSetMap.get("CUSTOMER_SEGMENT") != null)
