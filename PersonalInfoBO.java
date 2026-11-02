@@ -660,6 +660,12 @@ public class PersonalInfoBO
 						personalInfoDTO.setGstRegistrationStatus(resultSetMap.get("GST_REGISTERED").toString());
 					}
 					//1.0.0.21
+					//1.0.0.22
+					if(resultSetMap.get("PAYMENT_TERMS") != null)
+					{
+						personalInfoDTO.setPaymentTerms(resultSetMap.get("PAYMENT_TERMS").toString());
+					}
+					//1.0.0.22
 					
 					if(resultSetMap.get("LOB") != null)
 					{
@@ -1239,7 +1245,7 @@ public class PersonalInfoBO
 				  { 
 					    procName="{call Pkg_Los_Trn_Applicant_Master.PR_APP_MASTER_TRANSACTION(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, "
 					    		+ "?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,? ,?"
-					    		+ ",?,?,?,?, ?,?,?,?, ?,? ,? ,?,?,?,?, ?,?,?,?,?,?,?)}"; //1.0.0.3  //1.0.0.6added//1.0.0.9 //1.0.0.10 //1.0.0.11//1.0.0.12//1.0.0.13 //1.0.0.16 //1.0.0.16//1.0.0.18//1.0.0.19 //1.0.0.22
+					    		+ ",?,?,?,?, ?,?,?,?, ?,? ,? ,?,?,?,?, ?,?,?,?,?,?,?)}"; //1.0.0.3  //1.0.0.6added//1.0.0.9 //1.0.0.10 //1.0.0.11//1.0.0.12//1.0.0.13 //1.0.0.16 //1.0.0.16//1.0.0.18//1.0.0.19//1.0.0.22
 					 	arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,personalInfoForm.getApplicantID()));
 					 	arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,personalInfoForm.getApplicantCode()));
 						arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,personalInfoForm.getApplicantType()));
@@ -1419,11 +1425,11 @@ public class PersonalInfoBO
 		                arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,personalInfoForm.getGstRegistrationStatus())); // 1.0.0.21
 		                arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,
 		                		tdsRateSpec)); //1.0.0.23
-		                arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,personalInfoForm.getTermsAndConditions())); //1.0.0.22
+		                arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.CLOB,personalInfoForm.getPaymentTerms())); //1.0.0.22
 				  }
 				  else if(dbConnectionMap.get("DB_SERVER").toString().equals("MSSQLSERVER"))
 				  {
-					  procName="{call QC_LOS_FINAL.DBO.lostrnapplicantmaster_prappmastertransaction(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+					  procName="{call QC_LOS_FINAL.DBO.lostrnapplicantmaster_prappmastertransaction(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 					  arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.VARCHAR,personalInfoForm.getApplicantID()));
 					 	arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.VARCHAR,personalInfoForm.getApplicantCode()));
 						arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.VARCHAR,personalInfoForm.getApplicantType()));
@@ -1497,13 +1503,12 @@ public class PersonalInfoBO
 					 	arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.DOUBLE,personalInfoForm.getAuthCapital()));
 					 	arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.DOUBLE,personalInfoForm.getIssuedCap()));
 					 	arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.VARCHAR,personalInfoForm.getBoardRepresentative()));
-					 	arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.VARCHAR,personalInfoForm.getTermsAndConditions())); //1.0.0.22
 					 // Added for Dia Vikas
 						
 				  }
 				  else if(dbConnectionMap.get("DB_SERVER").toString().equals("MYSQL"))
 				  {
-					  procName="{call QC_LOS_FINAL.DBO.lostrnapplicantmaster_prappmastertransaction(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+					  procName="{call QC_LOS_FINAL.DBO.lostrnapplicantmaster_prappmastertransaction(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 					  arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.INTEGER,personalInfoForm.getApplicantID()!=null&&!"".equals(personalInfoForm.getApplicantID())?Integer.parseInt(personalInfoForm.getApplicantID()):0));
 					  arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.VARCHAR,personalInfoForm.getApplicantCode()));
 					  arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.INTEGER,personalInfoForm.getApplicantType()!=null&&!"".equals(personalInfoForm.getApplicantType())?Integer.parseInt(personalInfoForm.getApplicantType()):0));
@@ -1575,7 +1580,6 @@ public class PersonalInfoBO
 				 	  arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.DOUBLE,personalInfoForm.getAuthCapital()));
 				 	  arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.DOUBLE,personalInfoForm.getIssuedCap()));
 				 	  arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.VARCHAR,personalInfoForm.getBoardRepresentative()));
-					  arrParameter.add(new ParameterDTO(++parameterCount,"INPUT",java.sql.Types.VARCHAR,personalInfoForm.getTermsAndConditions())); //1.0.0.22
 
 					  
 					  
@@ -2087,6 +2091,12 @@ public class PersonalInfoBO
 							personalInfoDTO.setGstRegistrationStatus(resultSetMap.get("GST_REGISTERED").toString());
 						}
 						//1.0.0.21
+						//1.0.0.22
+						if(resultSetMap.get("PAYMENT_TERMS") != null)
+						{
+							personalInfoDTO.setPaymentTerms(resultSetMap.get("PAYMENT_TERMS").toString());
+						}
+						//1.0.0.22
 						
 						
 						if(resultSetMap.get("CUSTOMER_SEGMENT") != null)
@@ -3554,4 +3564,3 @@ public Map saveExperianData(String panNo,int applicantId,String reqType,String j
 
        
 }
-
