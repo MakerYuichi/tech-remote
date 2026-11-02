@@ -29,7 +29,6 @@
 +  1.0.0.21      Ravi Shankar          09-Apr-2026            GST Registration Status
 +  1.0.0.22     Nalin Kumar Jena  22-May-2026          UCIC for guarantor, Authorised signatory and Beneficiary Owner and Keycontact
 +  1.0.0.23     Ravi Shankar        14-AUG-2026        Lower TDS Rate Specification section
-+  1.0.0.24     Sanchi Agarwal      02-Nov-2026        Added Terms & Conditions (PC_PAYMENT_TERMS) field under Payment Instruction
 */
 package qc.los.model.bo;
 
@@ -152,6 +151,7 @@ public class PersonalInfoBO
 		ParameterDTO parameterDto3= null;//1.0.0.7
 		ParameterDTO parameterDto5=null;//1.0.0.19
 		ParameterDTO parameterDto6=null;//
+		ParameterDTO parameterDto7=null;//1.0.0.24
 		ParameterDTO parameterDto4= null;//1.0.0.17
 		PersonalInfoDTO personalInfoDTO = new PersonalInfoDTO();
 		PersonalInfoDTO personalInfoKeyContactDTO= null;
@@ -206,7 +206,7 @@ public class PersonalInfoBO
 			  parameterDto4 = (ParameterDTO)arrParameter.get(8);
 			  parameterDto5= (ParameterDTO)arrParameter.get(9); //1.0.0.19
 			  parameterDto6= (ParameterDTO)arrParameter.get(10); //1.0.0.23
-			  ParameterDTO parameterDto7= (ParameterDTO)arrParameter.get(11); //1.0.0.24 PC_PAYMENT_TERMS
+			  parameterDto7= (ParameterDTO)arrParameter.get(11); //1.0.0.24 PC_PAYMENT_TERMS
 			  if(parameterDto7 != null && parameterDto7.getParameterValue() != null) { //1.0.0.24
 				  personalInfoDTO.setPaymentTerms(parameterDto7.getParameterValue().toString()); //1.0.0.24
 			  } //1.0.0.24
@@ -1699,6 +1699,7 @@ public class PersonalInfoBO
 		ParameterDTO parameterDto3= null; //1.0.0.19
 		
 		ParameterDTO parameterDto6= null;//1.0.0.23
+		ParameterDTO parameterDto7Lms= null;//1.0.0.24
 		
 		Map map = new HashMap();
 		
@@ -1751,7 +1752,7 @@ public class PersonalInfoBO
 			  parameterDto2 = (ParameterDTO)arrParameter.get(9);
 			  parameterDto3= (ParameterDTO)arrParameter.get(10); //1.0.0.19
 			  parameterDto6= (ParameterDTO)arrParameter.get(11); //1.0.0.23
-			  ParameterDTO parameterDto7Lms= (ParameterDTO)arrParameter.get(12); //1.0.0.24 PC_PAYMENT_TERMS
+			  parameterDto7Lms= (ParameterDTO)arrParameter.get(12); //1.0.0.24 PC_PAYMENT_TERMS
 			  if(parameterDto7Lms != null && parameterDto7Lms.getParameterValue() != null) { //1.0.0.24
 				  personalInfoDTO.setPaymentTerms(parameterDto7Lms.getParameterValue().toString()); //1.0.0.24
 			  } //1.0.0.24
