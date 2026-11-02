@@ -29,6 +29,7 @@
 +  1.0.0.21      Ravi Shankar          09-Apr-2026            GST Registration Status
 +  1.0.0.22     Nalin Kumar Jena  22-May-2026          UCIC for guarantor, Authorised signatory and Beneficiary Owner and Keycontact
 +  1.0.0.23     Ravi Shankar        14-AUG-2026        Lower TDS Rate Specification section
++  1.0.0.24     Sanchi Agarwal      02-Nov-2026        Added Terms & Conditions (PC_PAYMENT_TERMS) field under Payment Instruction
 */
 package qc.los.model.bo;
 
@@ -660,12 +661,12 @@ public class PersonalInfoBO
 						personalInfoDTO.setGstRegistrationStatus(resultSetMap.get("GST_REGISTERED").toString());
 					}
 					//1.0.0.21
-					//1.0.0.22
+					//1.0.0.24
 					if(resultSetMap.get("PAYMENT_TERMS") != null)
 					{
 						personalInfoDTO.setPaymentTerms(resultSetMap.get("PAYMENT_TERMS").toString());
 					}
-					//1.0.0.22
+					//1.0.0.24
 					
 					if(resultSetMap.get("LOB") != null)
 					{
@@ -1425,7 +1426,7 @@ public class PersonalInfoBO
 		                arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,personalInfoForm.getGstRegistrationStatus())); // 1.0.0.21
 		                arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.VARCHAR,
 		                		tdsRateSpec)); //1.0.0.23
-		                arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.CLOB,personalInfoForm.getPaymentTerms())); //1.0.0.22
+		                arrParameter.add(new ParameterDTO(++parameterCount,"IN",oracle.jdbc.OracleTypes.CLOB,personalInfoForm.getPaymentTerms())); //1.0.0.24
 				  }
 				  else if(dbConnectionMap.get("DB_SERVER").toString().equals("MSSQLSERVER"))
 				  {
@@ -2091,12 +2092,12 @@ public class PersonalInfoBO
 							personalInfoDTO.setGstRegistrationStatus(resultSetMap.get("GST_REGISTERED").toString());
 						}
 						//1.0.0.21
-						//1.0.0.22
+						//1.0.0.24
 						if(resultSetMap.get("PAYMENT_TERMS") != null)
 						{
 							personalInfoDTO.setPaymentTerms(resultSetMap.get("PAYMENT_TERMS").toString());
 						}
-						//1.0.0.22
+						//1.0.0.24
 						
 						
 						if(resultSetMap.get("CUSTOMER_SEGMENT") != null)
